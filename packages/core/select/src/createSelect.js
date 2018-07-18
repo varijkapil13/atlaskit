@@ -260,6 +260,7 @@ export default function createSelect(WrappedComponent: ComponentType<*>) {
       validationState: 'default',
       spacing: 'default',
       onClickPreventDefault: true,
+      tabSelectsValue: false,
     };
     componentWillReceiveProps(nextProps: Props) {
       this.cacheComponents(nextProps.components);
@@ -287,10 +288,11 @@ export default function createSelect(WrappedComponent: ComponentType<*>) {
     };
     render() {
       const {
-        styles,
-        validationState,
-        spacing,
         isMulti,
+        styles,
+        spacing,
+        tabSelectsValue,
+        validationState,
         ...props
       } = this.props; // eslint-disable-line
       const isCompact = !isMulti && spacing === 'compact';
@@ -302,6 +304,7 @@ export default function createSelect(WrappedComponent: ComponentType<*>) {
           <WrappedComponent
             ref={this.onSelectRef}
             isMulti={isMulti}
+            tabSelectsValue={tabSelectsValue}
             {...props}
             components={this.components}
             styles={mergeStyles(baseStyles(validationState, isCompact), styles)}
