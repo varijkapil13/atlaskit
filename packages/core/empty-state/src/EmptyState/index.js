@@ -36,6 +36,10 @@ type Props = {
   tertiaryAction?: Element<any>,
   /** Shows spinner next to the action buttons. Primary and secondary action buttons are disabled when this prop is set to true. */
   isLoading?: boolean,
+  /** Useful when you know how wide you want the image to be. */
+  imageWidth?: number,
+  /** Useful when you know how tall you want the image to be. */
+  imageHeight?: number,
 };
 
 export default class EmptyState extends React.Component<Props> {
@@ -51,6 +55,8 @@ export default class EmptyState extends React.Component<Props> {
       description,
       size,
       imageUrl,
+      imageWidth,
+      imageHeight,
       maxImageWidth,
       maxImageHeight,
       primaryAction,
@@ -77,6 +83,8 @@ export default class EmptyState extends React.Component<Props> {
             src={imageUrl}
             maxWidth={maxImageWidth}
             maxHeight={maxImageHeight}
+            width={imageWidth}
+            height={imageHeight}
           />
         )}
         <Header>{header}</Header>
