@@ -19,7 +19,7 @@ import {
   Wrapper,
   ExpandIconWrapper,
 } from '../../../../ui/styles';
-import { changeToTaskDecision } from '../../../tasks-and-decisions/commands';
+import { insertTaskDecision } from '../../../tasks-and-decisions/commands';
 import { toggleBulletList, toggleOrderedList } from '../../commands';
 
 export interface Props {
@@ -204,7 +204,7 @@ export default class ToolbarLists extends PureComponent<Props, State> {
     if (!editorView) {
       return false;
     }
-    changeToTaskDecision(editorView, 'taskList');
+    insertTaskDecision(editorView, 'taskList');
     return true;
   };
 
