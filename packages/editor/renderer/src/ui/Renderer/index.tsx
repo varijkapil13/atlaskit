@@ -12,6 +12,7 @@ import {
 import { ReactSerializer, renderDocument, RendererContext } from '../../';
 import { RenderOutputStat } from '../../';
 import { Wrapper } from './style';
+import { TruncatedWrapper } from './truncated-wrapper';
 
 export type RendererAppearance =
   | 'message'
@@ -40,6 +41,8 @@ export interface Props {
   appearance?: RendererAppearance;
   adfStage?: ADFStage;
   disableHeadingIDs?: boolean;
+  maxHeight?: number;
+  truncated?: boolean;
 }
 
 export default class Renderer extends PureComponent<Props, {}> {
@@ -49,7 +52,6 @@ export default class Renderer extends PureComponent<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.providerFactory = props.dataProviders || new ProviderFactory();
-
     this.updateSerializer(props);
   }
 
@@ -89,7 +91,15 @@ export default class Renderer extends PureComponent<Props, {}> {
   }
 
   render() {
-    const { document, onComplete, schema, appearance, adfStage } = this.props;
+    const {
+      document,
+      onComplete,
+      schema,
+      appearance,
+      adfStage,
+      maxHeight,
+      truncated,
+    } = this.props;
 
     try {
       const { result, stat } = renderDocument(
@@ -102,8 +112,15 @@ export default class Renderer extends PureComponent<Props, {}> {
       if (onComplete) {
         onComplete(stat);
       }
+      const rendererOutput = (
+        <Wrapper appearance={appearance}>{result}</Wrapper>
+      );
 
-      return <Wrapper appearance={appearance}>{result}</Wrapper>;
+      return truncated ? (
+        <TruncatedWrapper height={maxHeight}>{rendererOutput}</TruncatedWrapper>
+      ) : (
+        rendererOutput
+      );
     } catch (ex) {
       return (
         <Wrapper appearance={appearance}>
