@@ -41,7 +41,7 @@ import { ActionDefinition as Action } from '../marks/action';
 
 /**
  * @name top_level_node
- * @minItems 1
+ * @minItems 0
  */
 export type TopLevel = Array<
   | Panel
