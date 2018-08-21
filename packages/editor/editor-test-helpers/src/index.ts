@@ -108,3 +108,4 @@ export {
   CardMockProvider,
   DelayedCardMockProvider,
 } from './card-provider';
+export { compareSelection } from './selection';
