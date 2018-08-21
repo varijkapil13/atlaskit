@@ -20,7 +20,6 @@ describe('Quick Insert', () => {
       editorProps: {
         quickInsert: true,
         allowPanel: true,
-        allowCodeBlocks: true,
       },
     });
 
@@ -88,7 +87,6 @@ describe('Quick Insert', () => {
       editorProps: {
         quickInsert: false,
         allowPanel: true,
-        allowCodeBlocks: true,
       },
     });
 

@@ -188,10 +188,7 @@ export default class Example extends React.Component<Props, State> {
               <Editor
                 appearance="full-page"
                 analyticsHandler={analyticsHandler}
-                allowTasksAndDecisions={true}
-                allowCodeBlocks={true}
                 allowLayouts={true}
-                allowLists={true}
                 allowTextColor={true}
                 allowTables={{
                   allowColumnResizing: true,

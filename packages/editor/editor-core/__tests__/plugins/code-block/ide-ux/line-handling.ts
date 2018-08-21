@@ -16,7 +16,6 @@ describe('IDE UX - Line Handling', () => {
   const getState = doc =>
     createEditor({
       doc,
-      editorProps: { allowCodeBlocks: { enableKeybindingsForIDE: true } },
     });
 
   describe('#getStartOfCurrentLine', () => {

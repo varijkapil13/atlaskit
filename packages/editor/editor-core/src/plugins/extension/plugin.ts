@@ -28,26 +28,17 @@ export default (
   providerFactory: ProviderFactory,
   extensionHandlers: ExtensionHandlers,
   portalProviderAPI: PortalProviderAPI,
-  allowExtension,
 ) =>
   new Plugin({
     state: {
       init: () => {
-        let stickToolbarToBottom = true;
-        let allowBreakout = false;
-
-        if (typeof allowExtension === 'object') {
-          stickToolbarToBottom = !!allowExtension.stickToolbarToBottom;
-          allowBreakout = !!allowExtension.allowBreakout;
-        }
-
         return {
           element: null,
           layout: 'default',
           showLayoutOptions: true,
-          stickToolbarToBottom,
+          stickToolbarToBottom: true,
           node: null,
-          allowBreakout,
+          allowBreakout: true,
         };
       },
       apply(tr, state: ExtensionState, prevState, nextState) {

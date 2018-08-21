@@ -180,8 +180,6 @@ export default class Editor extends React.Component<Props, State> {
     const defaultProps: EditorProps = {
       appearance: 'comment',
       shouldFocus: true,
-      allowCodeBlocks: true,
-      allowLists: true,
       onSave: () => this.onSave(actions),
       onCancel: this.onCancel,
       defaultValue,

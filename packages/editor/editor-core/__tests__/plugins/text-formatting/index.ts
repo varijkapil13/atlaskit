@@ -28,7 +28,6 @@ describe('text-formatting', () => {
       doc,
       editorProps: {
         analyticsHandler: trackEvent,
-        allowCodeBlocks: true,
         mentionProvider: new Promise(() => {}),
       },
       pluginKey: textFormattingPluginKey,

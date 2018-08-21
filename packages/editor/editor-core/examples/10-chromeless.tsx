@@ -65,8 +65,6 @@ export default function Example() {
               analyticsHandler={analyticsHandler}
               disabled={disabled}
               shouldFocus={true}
-              allowTasksAndDecisions={true}
-              allowCodeBlocks={true}
               saveOnEnter={true}
               mentionProvider={mentionProvider}
               emojiProvider={emojiProvider}

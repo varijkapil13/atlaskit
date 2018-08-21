@@ -14,7 +14,6 @@ describe('IDE UX plugin', () => {
     createEditor({
       doc,
       editorProps: {
-        allowCodeBlocks: { enableKeybindingsForIDE: true },
         analyticsHandler: trackEvent,
       },
     });

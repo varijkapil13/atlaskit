@@ -11,6 +11,7 @@ import {
   decisionList,
   decisionItem,
 } from '@atlaskit/editor-test-helpers';
+import { taskDecision } from '@atlaskit/util-data-test';
 import { ProviderFactory } from '@atlaskit/editor-common';
 import { uuid } from '@atlaskit/editor-common';
 
@@ -40,11 +41,11 @@ describe('@atlaskit/editor-core/ui/ToolbarInsertBlock', () => {
       pluginKey: blockTypePluginKey,
       editorProps: {
         analyticsHandler: trackEvent,
-        allowCodeBlocks: true,
         allowLayouts: true,
-        allowLists: true,
         allowPanel: true,
-        allowTasksAndDecisions: true,
+        taskDecisionProvider: Promise.resolve(
+          taskDecision.getMockTaskDecisionResource(),
+        ),
       },
       providerFactory,
     });

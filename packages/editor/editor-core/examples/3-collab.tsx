@@ -122,10 +122,7 @@ export default class Example extends React.Component<Props, State> {
               <Editor
                 appearance="full-page"
                 analyticsHandler={analyticsHandler}
-                allowTasksAndDecisions={true}
-                allowCodeBlocks={true}
                 allowLayouts={true}
-                allowLists={true}
                 allowTextColor={true}
                 allowDate={true}
                 allowTables={{
@@ -189,9 +186,6 @@ export default class Example extends React.Component<Props, State> {
               <Editor
                 appearance="full-page"
                 analyticsHandler={analyticsHandler}
-                allowTasksAndDecisions={true}
-                allowCodeBlocks={true}
-                allowLists={true}
                 allowTextColor={true}
                 allowDate={true}
                 allowTables={{

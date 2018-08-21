@@ -27,7 +27,6 @@ import { MacroProvider } from '../plugins/macro/types';
 import { MediaOptions } from '../plugins/media';
 import { PlaceholderTextOptions } from '../plugins/placeholder-text';
 import { CollabEditOptions } from '../plugins/collab-edit';
-import { CodeBlockOptions } from '../plugins/code-block';
 import { CardProvider, CardOptions } from '../plugins/card';
 import { QuickInsertOptions } from '../plugins/quick-insert/types';
 
@@ -54,10 +53,7 @@ export type InsertMenuCustomItem = {
   onClick?: (editorActions: EditorActions) => void;
 };
 
-export interface ExtensionConfig {
-  stickToolbarToBottom?: boolean;
-  allowBreakout?: boolean;
-}
+export type BlockTypes = 'heading' | 'blockquote' | 'hardBreak' | 'codeBlock';
 
 export interface EditorProps {
   appearance?: EditorAppearance;
@@ -71,24 +67,19 @@ export interface EditorProps {
   secondaryToolbarComponents?: ReactElement;
   addonToolbarComponents?: ReactElement;
 
-  allowBlockType?: { exclude?: Array<string> };
-  allowTasksAndDecisions?: boolean;
+  allowBlockType?: { exclude?: Array<BlockTypes> };
+
   allowRule?: boolean;
-  allowCodeBlocks?: boolean | CodeBlockOptions;
-  allowLists?: boolean;
   allowTextColor?: boolean | TextColorPluginConfig;
   allowTables?: boolean | TablesPluginConfig;
   allowHelpDialog?: boolean;
   allowJiraIssue?: boolean;
   allowUnsupportedContent?: boolean;
   allowPanel?: boolean;
-  allowExtension?: boolean | ExtensionConfig;
+  allowExtension?: boolean;
   allowConfluenceInlineComment?: boolean;
-  allowPlaceholderCursor?: boolean;
   allowTemplatePlaceholders?: boolean | PlaceholderTextOptions;
   allowDate?: boolean;
-  allowGapCursor?: boolean;
-  allowInlineAction?: boolean;
 
   // Temporary flag to enable layouts while it's under development
   allowLayouts?: boolean;

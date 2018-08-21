@@ -31,9 +31,7 @@ describe('extension', () => {
       doc,
       editorPlugins: [extensionPlugin],
       editorProps: {
-        allowExtension: {
-          allowBreakout: true,
-        },
+        allowExtension: true,
       },
     });
   };

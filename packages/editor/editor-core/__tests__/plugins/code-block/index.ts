@@ -11,7 +11,6 @@ describe('code-block', () => {
   const editor = (doc: any) => {
     return createEditor({
       doc,
-      editorProps: { allowCodeBlocks: true },
       pluginKey: codeBlockPluginKey,
     });
   };

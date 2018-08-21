@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { Editor, EditorContext, CollapsedEditor } from '@atlaskit/editor-core';
+import { taskDecision } from '@atlaskit/util-data-test';
 import ToolsDrawer from '../example-helpers/ToolsDrawer';
 
 const SAVE_ACTION = () => console.log('Save');
@@ -59,10 +60,7 @@ export default class EditorWithFeedback extends React.Component<Props, State> {
                     placeholder="What do you want to say?"
                     analyticsHandler={analyticsHandler}
                     shouldFocus={true}
-                    allowTasksAndDecisions={true}
-                    allowCodeBlocks={true}
                     allowTextColor={true}
-                    allowLists={true}
                     allowRule={true}
                     allowTables={{
                       allowColumnResizing: true,
@@ -77,6 +75,9 @@ export default class EditorWithFeedback extends React.Component<Props, State> {
                     allowDate={true}
                     disabled={disabled}
                     mentionProvider={mentionProvider}
+                    taskDecisionProvider={Promise.resolve(
+                      taskDecision.getMockTaskDecisionResource(),
+                    )}
                     onChange={onChange}
                     onSave={SAVE_ACTION}
                     onCancel={CANCEL_ACTION}

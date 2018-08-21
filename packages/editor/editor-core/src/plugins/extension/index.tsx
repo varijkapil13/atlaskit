@@ -49,19 +49,12 @@ const extensionPlugin: EditorPlugin = {
     return [
       {
         name: 'extension',
-        plugin: ({
-          schema,
-          props,
-          dispatch,
-          providerFactory,
-          portalProviderAPI,
-        }) =>
+        plugin: ({ props, dispatch, providerFactory, portalProviderAPI }) =>
           createPlugin(
             dispatch,
             providerFactory,
             props.extensionHandlers || {},
             portalProviderAPI,
-            props.allowExtension,
           ),
       },
     ];

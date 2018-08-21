@@ -8,6 +8,18 @@ import {
   ListsState,
   listsStateKey,
 } from '@atlaskit/editor-core';
+import {
+  TaskDecisionProvider,
+  Query,
+  DecisionResponse,
+  TaskResponse,
+  ItemResponse,
+  RecentUpdatesId,
+  RecentUpdateContext,
+  ObjectKey,
+  TaskState,
+  Handler,
+} from '@atlaskit/task-decision';
 import { MentionDescription, MentionProvider } from '@atlaskit/mention';
 import { valueOf as valueOfMarkState } from './web-to-native/markState';
 import { valueOf as valueOfListState } from './web-to-native/listState';
@@ -43,6 +55,25 @@ export class MentionProviderImpl implements MentionProvider {
   ): void {}
 
   unsubscribe(key: string): void {}
+}
+
+export class TaskDecisionProviderImpl implements TaskDecisionProvider {
+  getDecisions(query: Query): Promise<DecisionResponse> {
+    return Promise.resolve({ decisions: [] });
+  }
+  getTasks(query: Query): Promise<TaskResponse> {
+    return Promise.resolve({ tasks: [] });
+  }
+  getItems(query: Query): Promise<ItemResponse> {
+    return Promise.resolve({ items: [] });
+  }
+  unsubscribeRecentUpdates(id: RecentUpdatesId) {}
+  notifyRecentUpdates(updateContext?: RecentUpdateContext) {}
+  toggleTask(key: ObjectKey, state: TaskState): Promise<TaskState> {
+    return Promise.resolve('DONE' as TaskState);
+  }
+  subscribe(key: ObjectKey, handler: Handler) {}
+  unsubscribe(key: ObjectKey, handler: Handler) {}
 }
 
 const bridge: WebBridgeImpl = ((window as any).bridge = new WebBridgeImpl());
@@ -183,12 +214,10 @@ export default function mobileEditor() {
         provider: Promise.resolve(createMediaProvider()),
         allowMediaSingle: true,
       }}
-      allowLists={true}
       onChange={() => {
         toNativeBridge.updateText(bridge.getContent());
       }}
       allowPanel={true}
-      allowCodeBlocks={true}
       allowTables={{
         allowControls: false,
       }}
@@ -196,7 +225,7 @@ export default function mobileEditor() {
       allowTextColor={true}
       allowDate={true}
       allowRule={true}
-      allowTasksAndDecisions={true}
+      taskDecisionProvider={Promise.resolve(new TaskDecisionProviderImpl())}
     />
   );
 }

@@ -53,7 +53,6 @@ describe('text-formatting input rules', () => {
       doc,
       editorProps: {
         analyticsHandler: trackEvent,
-        allowCodeBlocks: true,
         textFormatting: { disableCode },
         emojiProvider: new Promise(() => {}),
         mentionProvider: new Promise(() => {}),
@@ -246,7 +245,6 @@ describe('text-formatting input rules', () => {
     notautoformats('<--');
     notautoformats('>');
     notautoformats('-!>');
-    notautoformats('- >');
 
     notautoformats('-->>');
     notautoformats('-->> ');
@@ -683,7 +681,6 @@ describe('text-formatting input rules', () => {
       notautoformats('__ __');
       notautoformats('** **');
       notautoformats('_ _');
-      notautoformats('* *');
       notautoformats('~~ ~~');
     });
 
@@ -707,7 +704,6 @@ describe('text-formatting input rules', () => {
       notautoformats('__ test__');
       notautoformats('** test**');
       notautoformats('_ test_');
-      notautoformats('* test*');
       notautoformats('~~ test~~');
     });
 

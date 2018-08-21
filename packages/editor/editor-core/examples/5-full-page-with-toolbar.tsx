@@ -85,9 +85,6 @@ export class ExampleEditor extends React.Component<Props> {
                 analyticsHandler={analyticsHandler}
                 quickInsert={{ provider: Promise.resolve(quickInsertProvider) }}
                 delegateAnalyticsEvent={(...args) => console.log(args)}
-                allowTasksAndDecisions={true}
-                allowCodeBlocks={{ enableKeybindingsForIDE: true }}
-                allowLists={true}
                 allowTextColor={true}
                 allowTables={{
                   allowColumnResizing: true,
@@ -102,13 +99,10 @@ export class ExampleEditor extends React.Component<Props> {
                 allowJiraIssue={true}
                 allowUnsupportedContent={true}
                 allowPanel={true}
-                allowExtension={{
-                  allowBreakout: true,
-                }}
+                allowExtension={true}
                 allowRule={true}
                 allowDate={true}
                 allowLayouts={true}
-                allowGapCursor={true}
                 allowTemplatePlaceholders={{ allowInserting: true }}
                 UNSAFE_cards={{
                   provider: Promise.resolve(cardProvider),

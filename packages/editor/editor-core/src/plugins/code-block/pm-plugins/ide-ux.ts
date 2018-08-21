@@ -6,6 +6,7 @@ import { filter } from '../../../utils/commands';
 import {
   getAutoClosingBracketInfo,
   isCursorBeforeClosingBracket,
+  isClosingBracket,
 } from '../ide-ux/bracket-handling';
 import {
   getEndOfCurrentLine,
@@ -39,6 +40,12 @@ export default new Plugin({
             view.dispatch(setTextSelection(to + text.length)(state.tr));
             return true;
           }
+        }
+
+        // If text is a closing bracket and we've already inserted it, move the selection after.
+        if (isClosingBracket(text) && afterText === text) {
+          view.dispatch(setTextSelection(to + text.length)(state.tr));
+          return true;
         }
 
         // Automatically add right-hand side bracket when user types the left bracket

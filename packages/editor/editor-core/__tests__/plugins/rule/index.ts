@@ -17,9 +17,7 @@ describe('rule', () => {
       editorPlugins: [rulePlugin, extensionPlugin],
       editorProps: {
         analyticsHandler: trackEvent,
-        allowExtension: {
-          allowBreakout: true,
-        },
+        allowExtension: true,
       },
     });
 

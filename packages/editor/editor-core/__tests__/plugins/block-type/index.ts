@@ -334,7 +334,7 @@ describe('block-type', () => {
     const editor = (doc: any) =>
       createEditor({
         doc,
-        editorProps: { appearance: 'comment', allowCodeBlocks: true },
+        editorProps: { appearance: 'comment' },
       });
 
     it('should create empty terminal empty paragraph when heading is created', () => {

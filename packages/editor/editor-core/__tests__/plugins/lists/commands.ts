@@ -13,7 +13,6 @@ describe('enterKeyCommand', () => {
   it("should outdent a list when list item doesn't have any visible content", () => {
     const { editorView } = createEditor({
       doc: doc(ol(li(p('text')), li(p('{<>}', hardBreak())))),
-      editorProps: { allowLists: true },
     });
     enterKeyCommand(editorView.state, editorView.dispatch);
     expect(editorView.state.doc).toEqualDocument(
@@ -27,7 +26,7 @@ describe('enterKeyCommand', () => {
       doc: doc(
         ol(li(p('text')), li(p('{<>}', hardBreak(), date({ timestamp })))),
       ),
-      editorProps: { allowLists: true, allowDate: true },
+      editorProps: { allowDate: true },
     });
     enterKeyCommand(editorView.state, editorView.dispatch);
     expect(editorView.state.doc).toEqualDocument(

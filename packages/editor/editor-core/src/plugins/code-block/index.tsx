@@ -10,11 +10,7 @@ import WithPluginState from '../../ui/WithPluginState';
 import { setNodeAttributes, deleteNodeAtPos } from './commands';
 import { focusStateKey } from '../base/pm-plugins/focus-handler';
 
-export interface CodeBlockOptions {
-  enableKeybindingsForIDE?: boolean;
-}
-
-const codeBlockPlugin = (options: CodeBlockOptions = {}) =>
+const codeBlockPlugin = () =>
   ({
     nodes() {
       return [{ name: 'codeBlock', node: codeBlock }];
@@ -28,7 +24,7 @@ const codeBlockPlugin = (options: CodeBlockOptions = {}) =>
         },
         {
           name: 'codeBlockIDEKeyBindings',
-          plugin: () => (options.enableKeybindingsForIDE ? ideUX : undefined),
+          plugin: () => ideUX,
         },
         {
           name: 'codeBlockKeyMap',

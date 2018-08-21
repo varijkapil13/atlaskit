@@ -19,8 +19,7 @@ import {
   LinkAction,
 } from '../../../src/plugins/hyperlink/pm-plugins/main';
 
-const editor = doc =>
-  createEditor({ doc, editorProps: { allowCodeBlocks: true } });
+const editor = doc => createEditor({ doc });
 
 describe('hyperlink commands', () => {
   describe('#setLinkHref', () => {

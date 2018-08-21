@@ -106,8 +106,6 @@ export default class EditorWithFeedback extends React.Component<Props, State> {
                   <Editor
                     appearance="comment"
                     analyticsHandler={analyticsHandler}
-                    allowCodeBlocks={true}
-                    allowLists={true}
                     allowTables={{
                       isHeaderRowRequired: true,
                     }}

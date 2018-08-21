@@ -113,14 +113,10 @@ export default class EditorWithFeedback extends React.Component<Props, State> {
                     analyticsHandler={analyticsHandler}
                     shouldFocus={true}
                     quickInsert={true}
-                    allowTasksAndDecisions={true}
-                    allowCodeBlocks={true}
                     allowTextColor={true}
-                    allowLists={true}
                     allowRule={true}
                     allowTables={true}
                     allowHelpDialog={true}
-                    allowGapCursor={true}
                     disabled={disabled}
                     activityProvider={activityProvider}
                     mentionProvider={mentionProvider}

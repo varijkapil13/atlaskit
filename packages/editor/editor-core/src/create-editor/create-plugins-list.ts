@@ -70,16 +70,8 @@ export default function createPluginsList(props: EditorProps): EditorPlugin[] {
     plugins.push(quickInsertPlugin);
   }
 
-  if (props.allowInlineAction) {
-    plugins.push(inlineActionPlugin);
-  }
-
   if (props.allowTextColor) {
     plugins.push(textColorPlugin);
-  }
-
-  if (props.allowLists) {
-    plugins.push(listsPlugin);
   }
 
   if (props.allowRule) {
@@ -90,9 +82,8 @@ export default function createPluginsList(props: EditorProps): EditorPlugin[] {
     plugins.push(mediaPlugin(props.media));
   }
 
-  if (props.allowCodeBlocks) {
-    const options = props.allowCodeBlocks !== true ? props.allowCodeBlocks : {};
-    plugins.push(codeBlockPlugin(options));
+  if (props.taskDecisionProvider) {
+    plugins.push(tasksAndDecisionsPlugin);
   }
 
   if (props.mentionProvider) {
@@ -107,11 +98,8 @@ export default function createPluginsList(props: EditorProps): EditorPlugin[] {
     plugins.push(tablesPlugin);
   }
 
-  if (props.allowTasksAndDecisions) {
-    plugins.push(tasksAndDecisionsPlugin);
-  }
-
-  if (props.allowHelpDialog) {
+  // Enable by default
+  if (props.allowHelpDialog === false) {
     plugins.push(helpDialogPlugin);
   }
 
@@ -180,10 +168,6 @@ export default function createPluginsList(props: EditorProps): EditorPlugin[] {
     plugins.push(layoutPlugin);
   }
 
-  if (props.allowGapCursor) {
-    plugins.push(gapCursorPlugin);
-  }
-
   if (props.UNSAFE_cards) {
     plugins.push(cardPlugin);
   }
@@ -196,6 +180,19 @@ export default function createPluginsList(props: EditorProps): EditorPlugin[] {
     }),
   );
 
+  if (props.allowBlockType) {
+    const isExcluded =
+      (props.allowBlockType.exclude || []).indexOf('codeBlock') !== -1;
+    if (!isExcluded) {
+      plugins.push(codeBlockPlugin());
+    }
+  } else {
+    plugins.push(codeBlockPlugin());
+  }
+
+  plugins.push(inlineActionPlugin);
+  plugins.push(gapCursorPlugin);
+  plugins.push(listsPlugin);
   plugins.push(submitEditorPlugin);
   plugins.push(fakeTextCursorPlugin);
   plugins.push(floatingToolbarPlugin);
