@@ -6,6 +6,7 @@ import { MediaSingle } from '@atlaskit/editor-common';
 import { MediaNodeProps } from './media';
 import { stateKey, MediaPluginState } from '../pm-plugins/main';
 import ResizableMediaSingle from '../ui/ResizableMediaSingle';
+import { stateKey as gridPluginKey } from '../../../plugins/grid';
 
 const DEFAULT_WIDTH = 250;
 const DEFAULT_HEIGHT = 200;
@@ -104,7 +105,8 @@ export default class MediaSingleNode extends Component<
   }
 
   render() {
-    const { layout } = this.props.node.attrs;
+    console.log('this props', this.props.node.attrs);
+    const { layout, columnSpan: columns } = this.props.node.attrs;
     const { progress } = this.state;
     let hideProgress = false;
 
@@ -141,6 +143,7 @@ export default class MediaSingleNode extends Component<
         layout={layout}
         width={width}
         height={height}
+        columns={columns}
         containerWidth={this.props.width}
         isLoading={!width}
       >
