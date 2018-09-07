@@ -9,18 +9,10 @@ export const textFormattingStyles = css`
   .ProseMirror span.code {
     font-size: ${relativeSize(0.857)}px;
     font-weight: normal;
-    padding: 2px 1px;
+    padding: 2px 4px;
     background: ${akColorN30A};
     border-radius: 3px;
     font-family: ${akEditorCodeFontFamily};
     white-space: pre-wrap;
-
-    &::before,
-    &::after {
-      vertical-align: text-top;
-      display: inline-block;
-      width: 3px;
-      content: '';
-    }
   }
 `;
