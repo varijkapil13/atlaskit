@@ -44,14 +44,16 @@ export const mediaSingle: NodeSpec = {
       tag: 'div[data-node-type="mediaSingle"]',
       getAttrs: (dom: HTMLElement) => ({
         layout: dom.getAttribute('data-layout') || 'center',
+        columnSpan: dom.getAttribute('data-column-span') || null,
       }),
     },
   ],
   toDOM(node: Node) {
-    const { layout } = node.attrs;
+    const { layout, columnSpan } = node.attrs;
     const attrs = {
       'data-node-type': 'mediaSingle',
       'data-layout': layout,
+      'data-column-span': columnSpan,
     };
     return ['div', attrs, 0];
   },
