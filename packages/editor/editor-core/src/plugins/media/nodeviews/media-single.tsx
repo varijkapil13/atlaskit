@@ -17,6 +17,7 @@ export interface MediaSingleNodeProps {
   view: EditorView;
   width: number;
   isResizable?: boolean;
+  getPos: () => number | undefined;
 }
 
 export interface MediaSingleNodeState {
@@ -105,6 +106,21 @@ export default class MediaSingleNode extends Component<
   mediaReady(mediaState) {
     return mediaState && mediaState.status === 'ready' && mediaState!.preview;
   }
+
+  updateSize = (columnSpan: number) => {
+    const { state, dispatch } = this.props.view;
+    const pos = this.props.getPos();
+    if (typeof pos === 'undefined') {
+      return;
+    }
+
+    return dispatch(
+      state.tr.setNodeMarkup(pos, undefined, {
+        ...this.props.node.attrs,
+        columnSpan,
+      }),
+    );
+  };
 
   render() {
     console.log('this props', this.props.node.attrs);
