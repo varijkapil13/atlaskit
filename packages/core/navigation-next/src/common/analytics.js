@@ -11,11 +11,32 @@ import type { ViewLayer } from '../view-controller/types';
 
 export const navigationChannel = 'navigation';
 
-const getDisplayName = component =>
-  component ? component.displayName || component.name : undefined;
+function getDisplayName(component) {
+  return component ? component.displayName || component.name : undefined;
+}
 
-const kebabToCamelCase = (str: string) =>
-  `${str}`.replace(/-([a-z])/gi, g => g[1].toUpperCase());
+function kebabToCamelCase(str: string) {
+  return `${str}`.replace(/-([a-z])/gi, g => g[1].toUpperCase());
+}
+
+function getClickHandler(componentName) {
+  return function navItemAnalyticsClickHandler(createAnalyticsEvent, props) {
+    const event = createAnalyticsEvent({
+      action: 'clicked',
+      actionSubject: 'navigationItem',
+      attributes: {
+        componentName,
+        iconSource: getDisplayName(props.icon) || getDisplayName(props.before),
+        itemId: kebabToCamelCase(props.id),
+        navigationItemIndex: props.index,
+      },
+    });
+
+    event.fire(navigationChannel);
+
+    return null;
+  };
+}
 
 export const navigationItemClicked = (
   Component: ComponentType<any>,
@@ -25,23 +46,7 @@ export const navigationItemClicked = (
     componentName,
   })(
     withAnalyticsEvents({
-      onClick: (createAnalyticsEvent, props) => {
-        const event = createAnalyticsEvent({
-          action: 'clicked',
-          actionSubject: 'navigationItem',
-          attributes: {
-            componentName,
-            iconSource:
-              getDisplayName(props.icon) || getDisplayName(props.before),
-            itemId: kebabToCamelCase(props.id),
-            navigationItemIndex: props.index,
-          },
-        });
-
-        event.fire(navigationChannel);
-
-        return null;
-      },
+      onClick: getClickHandler(componentName),
     })(Component),
   );
 };
