@@ -34,7 +34,7 @@ function calcWidth(
         ? 'calc(50% - 12px)'
         : `${width}px`;
     case 'wide':
-      return width > akEditorFullPageMaxWidth
+      return width < akEditorWideLayoutWidth && !columnSpan
         ? '100%'
         : `${Math.min(akEditorWideLayoutWidth, width)}px`;
     case 'full-width':
