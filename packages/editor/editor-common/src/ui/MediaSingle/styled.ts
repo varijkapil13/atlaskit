@@ -63,9 +63,9 @@ function calcMaxWidth(
 function calcMargin(layout: MediaSingleLayout): string {
   switch (layout) {
     case 'wrap-right':
-      return '12px auto 12px 24px';
+      return '12px 12px 12px 24px';
     case 'wrap-left':
-      return '12px 24px 12px auto';
+      return '12px 24px 12px 12px';
     default:
       return '24px auto';
   }
@@ -92,6 +92,7 @@ const MediaSingleDimensionHelper = ({
   width: ${calcWidth(layout, width, containerWidth)};
   float: ${float(layout)};
   margin: ${calcMargin(layout)};
+
   &::after {
     content: '';
     display: block;
@@ -108,9 +109,6 @@ const Wrapper: React.ComponentClass<
 > = styled.div`
   ${MediaSingleDimensionHelper};
   position: relative;
-  div[data-layout-column='true'] & {
-    padding-right: 12px;
-  }
 
   & > div {
     position: absolute;
