@@ -21,7 +21,7 @@ function float(layout: MediaSingleLayout): string {
   }
 }
 
-function calcWidth(
+export function calcMediaSingleWidth(
   layout: MediaSingleLayout,
   width: number,
   containerWidth?: number,
@@ -94,7 +94,6 @@ const MediaSingleDimensionHelper = ({
   columnSpan = 0,
 }: WrapperProps) => css`
   max-width: ${calcMaxWidth(layout, width, containerWidth)};
-  width: ${calcWidth(layout, width, containerWidth, columnSpan)};
   float: ${float(layout)};
   margin: ${calcMargin(layout)};
 

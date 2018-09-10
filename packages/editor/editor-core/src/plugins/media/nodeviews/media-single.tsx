@@ -78,6 +78,7 @@ export default class MediaSingleNode extends Component<
       this.state.progress !== nextState.progress ||
       node !== nextProps.node ||
       nextProps.width !== this.props.width ||
+      this.props.node.attrs.columnSpan !== nextProps.node.attrs.columnSpan ||
       width !== nextWidth
     );
   }
@@ -113,6 +114,8 @@ export default class MediaSingleNode extends Component<
     if (typeof pos === 'undefined') {
       return;
     }
+
+    console.log('have new colspan', columnSpan);
 
     return dispatch(
       state.tr.setNodeMarkup(pos, undefined, {

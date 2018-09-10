@@ -15,16 +15,30 @@ export interface Props {
   gridSize: number;
 }
 
-export function calcMediaSingleWidth(
+export function calcMediaWidth(
   columns: number,
   containerWidth: number,
   gridSize: number,
 ): number {
   const fullPagePadding = 32 * 2;
   const innerWidthOfContainer = containerWidth - fullPagePadding;
-  return (
+  return Math.floor(
     (containerWidth > 680 ? 680 : innerWidthOfContainer) / gridSize * columns -
-    24
+      24,
+  );
+}
+
+export function calcMediaColumns(
+  width: number,
+  containerWidth: number,
+  gridSize: number,
+): number {
+  const fullPagePadding = 32 * 2;
+  const innerWidthOfContainer = containerWidth - fullPagePadding;
+  return Math.ceil(
+    (width + 24) *
+      gridSize /
+      (containerWidth > 680 ? 680 : innerWidthOfContainer),
   );
 }
 
@@ -39,22 +53,16 @@ export default function MediaSingle({
   columns,
   gridSize,
 }: Props) {
-  const mediaWidth = columns
-    ? calcMediaSingleWidth(columns, containerWidth, gridSize)
-    : width;
-  console.log(
-    'have media width',
-    mediaWidth,
-    'with cols',
-    columns,
-    'containterWidth',
-    containerWidth,
-  );
+  const mediaWidth =
+    columns && gridSize
+      ? calcMediaWidth(columns, containerWidth, gridSize)
+      : width;
+
   return (
     <Wrapper
       layout={layout}
       width={mediaWidth}
-      height={columns ? height / (width / mediaWidth) : height}
+      height={columns && gridSize ? height / (width / mediaWidth) : height}
       columnSpan={columns}
       containerWidth={containerWidth}
       className={classnames('media-single', layout, className, {
