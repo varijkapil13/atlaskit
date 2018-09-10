@@ -61,6 +61,8 @@ export default class ResizableMediaSingle extends React.Component<
   Props,
   State
 > {
+  resizable: Resizable | null;
+
   handleResizeStart = () => {
     // this.setState({ isResizing: true });
     this.props.displayGrid(true);
@@ -109,7 +111,16 @@ export default class ResizableMediaSingle extends React.Component<
   ) => {
     this.props.displayGrid(false);
 
-    const newWidth = this.state.width + delta.width;
+    if (!this.resizable) {
+      return;
+    }
+
+    if (!this.resizable.state.original) {
+      console.error('no original state');
+      return;
+    }
+
+    const newWidth = this.resizable.state.original.width + delta.width;
     console.log('new width', newWidth, 'delta', delta);
     // this.setState({width: newWidth});
 
@@ -146,6 +157,10 @@ export default class ResizableMediaSingle extends React.Component<
       console.log('layout', newLayout);
       this.props.updateSize(null, newLayout);
     }
+  };
+
+  setResizableRef = ref => {
+    this.resizable = ref;
   };
 
   render() {
@@ -187,6 +202,7 @@ export default class ResizableMediaSingle extends React.Component<
         layout={this.props.layout}
       >
         <Resizable
+          ref={this.setResizableRef}
           size={{
             width: calcMediaSingleWidth(
               this.props.layout,
