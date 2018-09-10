@@ -9,8 +9,9 @@ import {
   akEditorWideLayoutWidth,
   akEditorBreakoutPadding,
 } from '../../styles';
+import { calcMediaWidth } from '.';
 
-function float(layout: MediaSingleLayout): string {
+export function floatMediaSingle(layout: MediaSingleLayout): string {
   switch (layout) {
     case 'wrap-right':
       return 'right';
@@ -63,7 +64,7 @@ function calcMaxWidth(
   }
 }
 
-function calcMargin(layout: MediaSingleLayout): string {
+export function marginMediaSingle(layout: MediaSingleLayout): string {
   switch (layout) {
     case 'wrap-right':
       return '12px 12px 12px 24px';
@@ -93,9 +94,10 @@ const MediaSingleDimensionHelper = ({
   containerWidth = 0,
   columnSpan = 0,
 }: WrapperProps) => css`
+  /*width: ${calcMediaSingleWidth(layout, containerWidth, columnSpan)};*/
   max-width: ${calcMaxWidth(layout, width, containerWidth)};
-  float: ${float(layout)};
-  margin: ${calcMargin(layout)};
+  /*float: ${floatMediaSingle(layout)};*/
+  /*margin: ${marginMediaSingle(layout)};*/
 
   &::after {
     content: '';

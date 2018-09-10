@@ -8,6 +8,11 @@ import MediaSingle, {
   calcMediaWidth,
   calcMediaColumns,
 } from '../../../../../editor-common/src/ui/MediaSingle';
+import {
+  calcMediaSingleWidth,
+  floatMediaSingle,
+  marginMediaSingle,
+} from '../../../../../editor-common/src/ui/MediaSingle/styled';
 
 type Props = MediaSingleProps & {
   updateSize: (columnSpan: number) => void;
@@ -81,10 +86,19 @@ export default class ResizableMediaSingle extends React.Component<
 
   render() {
     // TODO: calc snapping based on grid plugin
+    // TODO: grid size is dependent on node
     const x: number[] = [];
-    for (let i = 0; i <= 6; i++) {
+    const gridSize =
+      this.props.layout === 'wrap-left' || this.props.layout === 'wrap-right'
+        ? 12
+        : 6;
+    for (let i = 0; i <= gridSize; i++) {
       x.push(
-        calcMediaWidth(i, this.props.containerWidth || this.props.width, 6),
+        calcMediaWidth(
+          i,
+          this.props.containerWidth || this.props.width,
+          gridSize,
+        ),
       );
     }
 
@@ -104,11 +118,19 @@ export default class ResizableMediaSingle extends React.Component<
     return (
       <Resizable
         size={{
-          width: this.state.width,
+          width: calcMediaSingleWidth(
+            this.props.layout,
+            this.state.width,
+            this.props.containerWidth,
+            this.props.columns,
+          ),
         }}
-        style={{
-          margin: 'auto',
-        }}
+        style={
+          {
+            margin: marginMediaSingle(this.props.layout),
+            float: floatMediaSingle(this.props.layout),
+          } as React.CSSProperties
+        }
         snap={snap}
         enable={{
           left:

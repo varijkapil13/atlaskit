@@ -5,6 +5,91 @@ export const exampleDocument = {
     {
       type: 'heading',
       attrs: {
+        level: 2,
+      },
+      content: [
+        {
+          type: 'text',
+          text: 'Wrap Left - 4 columns',
+        },
+      ],
+    },
+    {
+      type: 'mediaSingle',
+      attrs: {
+        layout: 'wrap-left',
+        columnSpan: 4,
+      },
+      content: [
+        {
+          type: 'media',
+          attrs: {
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            type: 'file',
+            collection: 'MediaServicesSample',
+            width: '1600',
+            height: '885',
+          },
+        },
+      ],
+    },
+    {
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mi nisl, venenatis eget auctor vitae, venenatis quis lorem. Suspendisse maximus tortor vel dui tincidunt cursus. Vestibulum magna nibh, auctor non auctor id, finibus vitae orci. Nulla viverra ipsum et nunc fringilla ultricies. Pellentesque vitae felis molestie justo finibus accumsan. Suspendisse potenti. Nulla facilisi. Integer dignissim quis velit quis elementum. Sed sit amet varius ante. Duis vestibulum porta augue eu laoreet. Morbi id risus et augue sollicitudin aliquam. In et ligula dolor. Nam ac aliquet diam.',
+        },
+      ],
+    },
+    {
+      type: 'heading',
+      attrs: {
+        level: 2,
+      },
+      content: [
+        {
+          type: 'text',
+          text: 'Wrap Right - 8 columns',
+        },
+      ],
+    },
+    {
+      type: 'mediaSingle',
+      attrs: {
+        layout: 'wrap-right',
+        columnSpan: 8,
+      },
+      content: [
+        {
+          type: 'media',
+          attrs: {
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            type: 'file',
+            collection: 'MediaServicesSample',
+            width: '1600',
+            height: '885',
+          },
+        },
+      ],
+    },
+    {
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mi nisl, venenatis eget auctor vitae, venenatis quis lorem. Suspendisse maximus tortor vel dui tincidunt cursus. Vestibulum magna nibh, auctor non auctor id, finibus vitae orci. Nulla viverra ipsum et nunc fringilla ultricies. Pellentesque vitae felis molestie justo finibus accumsan. Suspendisse potenti. Nulla facilisi. Integer dignissim quis velit quis elementum. Sed sit amet varius ante. Duis vestibulum porta augue eu laoreet. Morbi id risus et augue sollicitudin aliquam. In et ligula dolor. Nam ac aliquet diam.',
+        },
+      ],
+    },
+
+    /**********************************************************************/
+
+    {
+      type: 'heading',
+      attrs: {
         level: 3,
       },
       content: [
@@ -416,135 +501,6 @@ export const exampleDocument = {
             width: '1600',
             height: '885',
           },
-        },
-      ],
-    },
-
-    /**********************************************************************/
-
-    {
-      type: 'heading',
-      attrs: {
-        level: 2,
-      },
-      content: [
-        {
-          type: 'text',
-          text: 'Wrap Left - 4 columns',
-        },
-      ],
-    },
-    {
-      type: 'mediaSingle',
-      attrs: {
-        layout: 'wrap-left',
-        columnSpan: 4,
-      },
-      content: [
-        {
-          type: 'media',
-          attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
-            type: 'file',
-            collection: 'MediaServicesSample',
-            width: '1600',
-            height: '885',
-          },
-        },
-      ],
-    },
-    {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mi nisl, venenatis eget auctor vitae, venenatis quis lorem. Suspendisse maximus tortor vel dui tincidunt cursus. Vestibulum magna nibh, auctor non auctor id, finibus vitae orci. Nulla viverra ipsum et nunc fringilla ultricies. Pellentesque vitae felis molestie justo finibus accumsan. Suspendisse potenti. Nulla facilisi. Integer dignissim quis velit quis elementum. Sed sit amet varius ante. Duis vestibulum porta augue eu laoreet. Morbi id risus et augue sollicitudin aliquam. In et ligula dolor. Nam ac aliquet diam.',
-        },
-      ],
-    },
-
-    /**********************************************************************/
-
-    {
-      type: 'heading',
-      attrs: {
-        level: 2,
-      },
-      content: [
-        {
-          type: 'text',
-          text: 'Wrap Right - 2 columns',
-        },
-      ],
-    },
-    {
-      type: 'mediaSingle',
-      attrs: {
-        layout: 'wrap-right',
-        columnSpan: 2,
-      },
-      content: [
-        {
-          type: 'media',
-          attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
-            type: 'file',
-            collection: 'MediaServicesSample',
-            width: '1600',
-            height: '885',
-          },
-        },
-      ],
-    },
-    {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mi nisl, venenatis eget auctor vitae, venenatis quis lorem. Suspendisse maximus tortor vel dui tincidunt cursus. Vestibulum magna nibh, auctor non auctor id, finibus vitae orci. Nulla viverra ipsum et nunc fringilla ultricies. Pellentesque vitae felis molestie justo finibus accumsan. Suspendisse potenti. Nulla facilisi. Integer dignissim quis velit quis elementum. Sed sit amet varius ante. Duis vestibulum porta augue eu laoreet. Morbi id risus et augue sollicitudin aliquam. In et ligula dolor. Nam ac aliquet diam.',
-        },
-      ],
-    },
-    {
-      type: 'heading',
-      attrs: {
-        level: 2,
-      },
-      content: [
-        {
-          type: 'text',
-          text: 'Wrap Right - 8 columns',
-        },
-      ],
-    },
-    {
-      type: 'mediaSingle',
-      attrs: {
-        layout: 'wrap-right',
-        columnSpan: 8,
-      },
-      content: [
-        {
-          type: 'media',
-          attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
-            type: 'file',
-            collection: 'MediaServicesSample',
-            width: '1600',
-            height: '885',
-          },
-        },
-      ],
-    },
-    {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mi nisl, venenatis eget auctor vitae, venenatis quis lorem. Suspendisse maximus tortor vel dui tincidunt cursus. Vestibulum magna nibh, auctor non auctor id, finibus vitae orci. Nulla viverra ipsum et nunc fringilla ultricies. Pellentesque vitae felis molestie justo finibus accumsan. Suspendisse potenti. Nulla facilisi. Integer dignissim quis velit quis elementum. Sed sit amet varius ante. Duis vestibulum porta augue eu laoreet. Morbi id risus et augue sollicitudin aliquam. In et ligula dolor. Nam ac aliquet diam.',
         },
       ],
     },
