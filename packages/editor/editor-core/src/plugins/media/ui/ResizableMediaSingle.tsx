@@ -13,6 +13,9 @@ import {
   floatMediaSingle,
   marginMediaSingle,
 } from '../../../../../editor-common/src/ui/MediaSingle/styled';
+import * as classnames from 'classnames';
+import styled, { css } from 'styled-components';
+import { MediaSingleLayout } from '@atlaskit/editor-common';
 
 type Props = MediaSingleProps & {
   updateSize: (columnSpan: number) => void;
@@ -23,6 +26,34 @@ type State = {
   // isResizing: boolean;
   width: number;
 };
+
+// TODO: use attrs
+export interface WrapperProps {
+  layout: MediaSingleLayout;
+  width: number;
+  height: number;
+  // containerWidth?: number;
+  // columnSpan?: number;
+}
+
+const Wrapper: React.ComponentClass<
+  React.HTMLAttributes<{}> & WrapperProps
+> = styled.div`
+  & > div > div {
+    position: absolute;
+    height: 100%;
+  }
+
+  & > div::after {
+    content: '';
+    display: block;
+    padding-bottom: ${(r: WrapperProps) => r.height / r.width * 100}%;
+  }
+
+  & > div {
+    margin: ${(r: WrapperProps) => marginMediaSingle(r.layout)};
+  }
+`;
 
 export default class ResizableMediaSingle extends React.Component<
   Props,
@@ -103,12 +134,13 @@ export default class ResizableMediaSingle extends React.Component<
     }
 
     // FIXME: for these, we want extra styling on the resizer so that we apply the correct margins
-    x.push(akEditorWideLayoutWidth);
+    x.push(akEditorWideLayoutWidth - 24);
     if (
       this.props.containerWidth &&
-      this.props.width > this.props.containerWidth
+      this.props.width >= this.props.containerWidth
     ) {
-      x.push(this.props.width);
+      // FIXME: padding from container?
+      x.push(this.props.containerWidth - 96);
     }
 
     const snap = {
@@ -116,51 +148,67 @@ export default class ResizableMediaSingle extends React.Component<
     };
 
     return (
-      <Resizable
-        size={{
-          width: calcMediaSingleWidth(
-            this.props.layout,
-            this.state.width,
-            this.props.containerWidth,
-            this.props.columns,
-          ),
-        }}
-        style={
-          {
-            margin: marginMediaSingle(this.props.layout),
-            float: floatMediaSingle(this.props.layout),
-          } as React.CSSProperties
-        }
-        snap={snap}
-        enable={{
-          left:
-            this.props.layout === 'center' ||
-            this.props.layout === 'wide' ||
-            this.props.layout === 'full-width' ||
-            this.props.layout === 'wrap-right',
-          right:
-            this.props.layout === 'center' ||
-            this.props.layout === 'wide' ||
-            this.props.layout === 'full-width' ||
-            this.props.layout === 'wrap-left',
-        }}
-        onResizeStop={this.handleResizeStop}
-        onResizeStart={this.handleResizeStart}
+      <Wrapper
+        width={this.props.width}
+        height={this.props.height}
+        layout={this.props.layout}
       >
-        <MediaSingle
-          {...this.props}
-          columns={this.props.columns}
-          gridSize={0}
-          width={this.state.width}
-          height={
-            this.props.columns
-              ? this.props.height / (this.props.width / this.state.width)
-              : this.props.height
+        <Resizable
+          size={{
+            width: calcMediaSingleWidth(
+              this.props.layout,
+              this.state.width,
+              this.props.containerWidth,
+              this.props.columns,
+            ),
+          }}
+          style={
+            {
+              float: floatMediaSingle(this.props.layout),
+            } as React.CSSProperties
           }
+          className={classnames(
+            'media-single',
+            this.props.layout,
+            this.props.className,
+            {
+              'is-loading': this.props.isLoading,
+              'media-wrapped':
+                this.props.layout === 'wrap-left' ||
+                this.props.layout === 'wrap-right',
+            },
+          )}
+          snap={snap}
+          enable={{
+            left:
+              this.props.layout === 'center' ||
+              this.props.layout === 'wide' ||
+              this.props.layout === 'full-width' ||
+              this.props.layout === 'wrap-right',
+            right:
+              this.props.layout === 'center' ||
+              this.props.layout === 'wide' ||
+              this.props.layout === 'full-width' ||
+              this.props.layout === 'wrap-left',
+          }}
+          onResizeStop={this.handleResizeStop}
+          onResizeStart={this.handleResizeStart}
         >
+          {/* <MediaSingle
+            {...this.props}
+            columns={this.props.columns}
+            gridSize={0}
+            width={this.state.width}
+            height={
+              this.props.columns
+                ? this.props.height / (this.props.width / this.state.width)
+                : this.props.height
+            }
+          > */}
           {React.Children.only(this.props.children)}
-        </MediaSingle>
-      </Resizable>
+          {/* </MediaSingle> */}
+        </Resizable>
+      </Wrapper>
     );
   }
 }

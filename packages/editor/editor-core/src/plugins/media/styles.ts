@@ -5,8 +5,8 @@ import { mediaSingleSharedStyle } from '@atlaskit/editor-common';
 
 export const mediaStyles = css`
   .ProseMirror {
-    ${mediaSingleSharedStyle} & [layout='full-width'] > div,
-    & [layout='wide'] > div {
+    ${mediaSingleSharedStyle} & [layout='full-width'] div.media-single,
+    & [layout='wide'] div.media-single {
       margin-left: 50%;
       transform: translateX(-50%);
     }
