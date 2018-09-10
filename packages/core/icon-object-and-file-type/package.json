@@ -1,0 +1,32 @@
+{
+    "name": "@atlaskit/icon-object-and-file-type",
+    "version": "0.0.0",
+    "description": "A React package that contains oddly sized icons",
+    "license": "SEE LICENSE IN LICENSE",
+    "main": "es5/index.js",
+    "module": "dist/esm/index.js",
+    "sideEffects": false,
+    "files": [
+      "dist"
+    ],
+    "author": "Atlassian Pty Ltd",
+    "maintainers": [
+      "Raja B",
+      "Ben C",
+      "Ajay M"
+    ],
+    "repository": "https://bitbucket.org/atlassian/atlaskit-mk-2",
+    "scripts": {},
+    "dependencies": {},
+    "peerDependencies": {
+      "react": "^16.4.0",
+      "styled-components": "^3.2.6"
+    },
+    "devDependencies": {
+        "@atlaskit/docs": "^5.0.6"
+    },
+    "keywords": [
+      "atlaskit",
+      "ui"
+    ]
+  }
