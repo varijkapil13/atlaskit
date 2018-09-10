@@ -162,16 +162,18 @@ export default class ResizableMediaSingle extends React.Component<
           margin: 'auto',
         }}
         snap={snap}
-        // grid={[680/6, 1]}
-        // lockAspectRatio={aspectRatio}
-        // enable={{
-        //   left:
-        //     this.props.layout === 'center' ||
-        //     this.props.layout === 'wrap-right',
-        //   right:
-        //     this.props.layout === 'center' ||
-        //     this.props.layout === 'wrap-left',
-        // }}
+        enable={{
+          left:
+            this.props.layout === 'center' ||
+            this.props.layout === 'wide' ||
+            this.props.layout === 'full-width' ||
+            this.props.layout === 'wrap-right',
+          right:
+            this.props.layout === 'center' ||
+            this.props.layout === 'wide' ||
+            this.props.layout === 'full-width' ||
+            this.props.layout === 'wrap-left',
+        }}
         onResizeStop={this.handleResizeStop}
       >
         <MediaSingle
