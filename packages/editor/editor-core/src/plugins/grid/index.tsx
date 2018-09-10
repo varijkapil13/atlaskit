@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Plugin } from 'prosemirror-state';
 import { PluginKey } from 'prosemirror-state';
-import { EditorPlugin } from '../../types';
+import { EditorPlugin, Command } from '../../types';
 import {
   akEditorFullPageMaxWidth,
   akEditorWideLayoutWidth,
@@ -24,16 +24,22 @@ const calcGridSize = (width: number): number => {
   return DEFAULT_GRID_SIZE;
 };
 
+export const displayGrid = (show: boolean): Command => {
+  return (state, dispatch) => {
+    dispatch(state.tr.setMeta(stateKey, show));
+    return true;
+  };
+};
+
 export const createPlugin = ({ dispatch }) =>
   new Plugin({
     key: stateKey,
     state: {
       init: (_, state): GridPluginState => {
+        const editorWidth = widthPlugin.getState(state);
         return {
-          gridSize: widthPlugin.getState(state)
-            ? calcGridSize(widthPlugin.getState(state))
-            : DEFAULT_GRID_SIZE,
-          visible: true,
+          gridSize: editorWidth ? calcGridSize(editorWidth) : DEFAULT_GRID_SIZE,
+          visible: false,
         };
       },
       apply: (tr, pluginState: GridPluginState, oldState, newState) => {

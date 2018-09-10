@@ -9,7 +9,11 @@ import MediaSingle, {
   calcMediaColumns,
 } from '../../../../../editor-common/src/ui/MediaSingle';
 
-type Props = MediaSingleProps & { updateSize: (columnSpan: number) => void };
+type Props = MediaSingleProps & {
+  updateSize: (columnSpan: number) => void;
+  displayGrid: (show: boolean) => void;
+};
+
 type State = {
   // isResizing: boolean;
   width: number;
@@ -19,9 +23,10 @@ export default class ResizableMediaSingle extends React.Component<
   Props,
   State
 > {
-  // handleResizeStart = () => {
-  //   this.setState({ isResizing: true });
-  // };
+  handleResizeStart = () => {
+    // this.setState({ isResizing: true });
+    this.props.displayGrid(true);
+  };
 
   calcWidth(props) {
     return props.columns
@@ -48,6 +53,8 @@ export default class ResizableMediaSingle extends React.Component<
     refToElement,
     delta: { width: number; height: number },
   ) => {
+    this.props.displayGrid(false);
+
     const newWidth = this.state.width + delta.width;
     console.log('new width', newWidth, 'delta', delta);
     // this.setState({width: newWidth});
@@ -73,8 +80,6 @@ export default class ResizableMediaSingle extends React.Component<
   };
 
   render() {
-    const { layout, width, containerWidth, columnSpan, isLoading } = this.props;
-
     // TODO: calc snapping based on grid plugin
     const x: number[] = [];
     for (let i = 0; i <= 6; i++) {
@@ -118,6 +123,7 @@ export default class ResizableMediaSingle extends React.Component<
             this.props.layout === 'wrap-left',
         }}
         onResizeStop={this.handleResizeStop}
+        onResizeStart={this.handleResizeStart}
       >
         <MediaSingle
           {...this.props}

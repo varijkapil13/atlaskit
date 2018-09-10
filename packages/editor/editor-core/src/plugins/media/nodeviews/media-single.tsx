@@ -6,7 +6,7 @@ import { MediaSingle } from '@atlaskit/editor-common';
 import { MediaNodeProps } from './media';
 import { stateKey, MediaPluginState } from '../pm-plugins/main';
 import ResizableMediaSingle from '../ui/ResizableMediaSingle';
-import { stateKey as gridPluginKey } from '../../../plugins/grid';
+import { stateKey as gridPluginKey, displayGrid } from '../../../plugins/grid';
 import { hasParentNodeOfType } from 'prosemirror-utils';
 
 const DEFAULT_WIDTH = 250;
@@ -123,6 +123,9 @@ export default class MediaSingleNode extends Component<
     );
   };
 
+  displayGrid = show =>
+    displayGrid(show)(this.props.view.state, this.props.view.dispatch);
+
   render() {
     console.log('this props', this.props.node.attrs);
     const { layout, columnSpan: columns } = this.props.node.attrs;
@@ -159,32 +162,27 @@ export default class MediaSingleNode extends Component<
 
     const { layoutColumn } = this.props.view.state.schema.nodes;
 
-    return (
-      <MediaSingleComponent
-        layout={layout}
-        width={width}
-        height={height}
-        columns={columns}
-        containerWidth={this.props.width}
-        gridSize={
-          /*hasParentNodeOfType(layoutColumn)(this.props.view.state.selection) ? 6 :*/ 12
-        }
-        isLoading={!width}
+    const props = {
+      layout,
+      width,
+      height,
+      columns,
+
+      containerWidth: this.props.width,
+      gridSize: /*hasParentNodeOfType(layoutColumn)(this.props.view.state.selection) ? 6 :*/ 12,
+      isLoading: !width,
+    };
+
+    return this.props.isResizable ? (
+      <ResizableMediaSingle
+        {...props}
+        updateSize={this.updateSize}
+        displayGrid={this.displayGrid}
       >
-        {React.cloneElement(
-          this.child as ReactElement<any>,
-          {
-            cardDimensions: {
-              width: '100%',
-              height: '100%',
-            },
-            hideProgress,
-            isMediaSingle: true,
-            progress,
-            onExternalImageLoaded: this.onExternalImageLoaded,
-          } as MediaNodeProps,
-        )}
-      </MediaSingleComponent>
+        {children}
+      </ResizableMediaSingle>
+    ) : (
+      <MediaSingle {...props}>{children}</MediaSingle>
     );
   }
 }
