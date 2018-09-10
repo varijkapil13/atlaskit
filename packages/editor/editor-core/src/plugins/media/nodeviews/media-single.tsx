@@ -8,6 +8,7 @@ import { stateKey, MediaPluginState } from '../pm-plugins/main';
 import ResizableMediaSingle from '../ui/ResizableMediaSingle';
 import { stateKey as gridPluginKey, displayGrid } from '../../../plugins/grid';
 import { hasParentNodeOfType } from 'prosemirror-utils';
+import { MediaSingleLayout } from '@atlaskit/editor-common';
 
 const DEFAULT_WIDTH = 250;
 const DEFAULT_HEIGHT = 200;
@@ -108,7 +109,7 @@ export default class MediaSingleNode extends Component<
     return mediaState && mediaState.status === 'ready' && mediaState!.preview;
   }
 
-  updateSize = (columnSpan: number) => {
+  updateSize = (columnSpan: number | null, layout: MediaSingleLayout) => {
     const { state, dispatch } = this.props.view;
     const pos = this.props.getPos();
     if (typeof pos === 'undefined') {
@@ -118,6 +119,7 @@ export default class MediaSingleNode extends Component<
     return dispatch(
       state.tr.setNodeMarkup(pos, undefined, {
         ...this.props.node.attrs,
+        layout,
         columnSpan,
       }),
     );
@@ -127,7 +129,6 @@ export default class MediaSingleNode extends Component<
     displayGrid(show)(this.props.view.state, this.props.view.dispatch);
 
   render() {
-    console.log('this props', this.props.node.attrs);
     const { layout, columnSpan: columns } = this.props.node.attrs;
     const { progress } = this.state;
     let hideProgress = false;
