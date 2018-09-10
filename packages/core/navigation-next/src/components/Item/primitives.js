@@ -4,21 +4,33 @@ import React, {
   PureComponent,
   type Element as ReactElement,
   type ComponentType,
+  type Ref,
 } from 'react';
 import { css } from 'emotion';
 
 import { styleReducerNoOp, withContentTheme } from '../../theme';
 import type { ItemProps } from './types';
 
+const isString = x => typeof x === 'string';
+
 type SwitchProps = {
   as: ReactElement<'a' | 'button' | 'div' | ComponentType>,
+  innerRef: Ref<*>,
 };
-const ComponentSwitch = ({ as: ElementOrComponent, ...props }: SwitchProps) => (
-  <ElementOrComponent {...props} />
-);
+const ComponentSwitch = ({
+  as,
+  draggableProps,
+  innerRef,
+  ...rest
+}: SwitchProps) => {
+  const props = isString(as) ? rest : { innerRef, draggableProps, ...rest };
+  const ElementOrComponent = as;
+  return <ElementOrComponent ref={innerRef} {...draggableProps} {...props} />;
+};
 
 class ItemPrimitive extends PureComponent<ItemProps> {
   static defaultProps = {
+    draggableProps: {},
     isActive: false,
     isHover: false,
     isSelected: false,
@@ -27,13 +39,14 @@ class ItemPrimitive extends PureComponent<ItemProps> {
     text: '',
   };
   render() {
-    // const { ItemBase } = this;
     const {
       after: After,
       before: Before,
       styles: styleReducer,
       isActive,
       isDragging,
+      innerRef,
+      draggableProps,
       isHover,
       isSelected,
       spacing,
@@ -60,17 +73,16 @@ class ItemPrimitive extends PureComponent<ItemProps> {
     // base element switch
 
     let itemComponent = 'div';
-    let itemProps = {};
+    let itemProps = { draggableProps, innerRef };
 
     if (CustomComponent) {
       itemComponent = CustomComponent;
       itemProps = this.props;
     } else if (href) {
       itemComponent = 'a';
-      itemProps = { href, onClick, target };
+      itemProps = { href, onClick, target, draggableProps, innerRef };
     } else if (onClick) {
-      itemComponent = 'button';
-      itemProps = { onClick };
+      itemProps = { onClick, role: 'button', draggableProps, innerRef };
     }
 
     return (
