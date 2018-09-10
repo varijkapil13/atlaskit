@@ -115,8 +115,6 @@ export default class MediaSingleNode extends Component<
       return;
     }
 
-    console.log('have new colspan', columnSpan);
-
     return dispatch(
       state.tr.setNodeMarkup(pos, undefined, {
         ...this.props.node.attrs,

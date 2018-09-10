@@ -5,15 +5,37 @@ export const exampleDocument = {
     {
       type: 'heading',
       attrs: {
-        level: 2,
+        level: 3,
       },
       content: [
         {
           type: 'text',
-          text: 'Columns',
+          text: '12 Columns',
         },
       ],
     },
+    {
+      type: 'mediaSingle',
+      attrs: {
+        layout: 'center',
+        columnSpan: 12,
+      },
+      content: [
+        {
+          type: 'media',
+          attrs: {
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            type: 'file',
+            collection: 'MediaServicesSample',
+            width: '1600',
+            height: '885',
+          },
+        },
+      ],
+    },
+
+    /**********************************************************************/
+
     {
       type: 'heading',
       attrs: {
@@ -22,7 +44,7 @@ export const exampleDocument = {
       content: [
         {
           type: 'text',
-          text: '2 Columns',
+          text: '6 Columns',
         },
       ],
     },
@@ -30,21 +52,24 @@ export const exampleDocument = {
       type: 'mediaSingle',
       attrs: {
         layout: 'center',
-        columnSpan: 2,
+        columnSpan: 6,
       },
       content: [
         {
           type: 'media',
           attrs: {
-            id: '6c6ae2d7-6c8c-4d9b-adfb-ac5698553585',
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: '980',
-            height: '463',
+            width: '1600',
+            height: '885',
           },
         },
       ],
     },
+
+    /**********************************************************************/
+
     {
       type: 'heading',
       attrs: {
@@ -67,15 +92,52 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '6c6ae2d7-6c8c-4d9b-adfb-ac5698553585',
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: '980',
-            height: '463',
+            width: '1600',
+            height: '885',
           },
         },
       ],
     },
+
+    /**********************************************************************/
+
+    {
+      type: 'heading',
+      attrs: {
+        level: 3,
+      },
+      content: [
+        {
+          type: 'text',
+          text: '2 Columns',
+        },
+      ],
+    },
+    {
+      type: 'mediaSingle',
+      attrs: {
+        layout: 'center',
+        columnSpan: 2,
+      },
+      content: [
+        {
+          type: 'media',
+          attrs: {
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            type: 'file',
+            collection: 'MediaServicesSample',
+            width: '1600',
+            height: '885',
+          },
+        },
+      ],
+    },
+
+    /**********************************************************************/
+
     {
       type: 'heading',
       attrs: {
@@ -96,93 +158,7 @@ export const exampleDocument = {
       content: [
         {
           type: 'text',
-          text: 'Two Equal - Constrained',
-        },
-      ],
-    },
-    {
-      type: 'layoutSection',
-      attrs: {
-        layoutType: 'two_equal',
-      },
-      content: [
-        {
-          type: 'layoutColumn',
-          content: [
-            {
-              type: 'paragraph',
-              content: [
-                {
-                  type: 'text',
-                  text: '2 columns',
-                },
-              ],
-            },
-            {
-              type: 'mediaSingle',
-              attrs: {
-                layout: 'center',
-                columnSpan: 2,
-              },
-              content: [
-                {
-                  type: 'media',
-                  attrs: {
-                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
-                    type: 'file',
-                    collection: 'MediaServicesSample',
-                    width: 980,
-                    height: 463,
-                  },
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: 'layoutColumn',
-          content: [
-            {
-              type: 'paragraph',
-              content: [
-                {
-                  type: 'text',
-                  text: '4 columns',
-                },
-              ],
-            },
-            {
-              type: 'mediaSingle',
-              attrs: {
-                layout: 'center',
-                columnSpan: 4,
-              },
-              content: [
-                {
-                  type: 'media',
-                  attrs: {
-                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
-                    type: 'file',
-                    collection: 'MediaServicesSample',
-                    width: '980',
-                    height: '463',
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      type: 'heading',
-      attrs: {
-        level: 3,
-      },
-      content: [
-        {
-          type: 'text',
-          text: 'Two Equal - Overflow',
+          text: 'Two Equal',
         },
       ],
     },
@@ -250,8 +226,8 @@ export const exampleDocument = {
                     id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
                     type: 'file',
                     collection: 'MediaServicesSample',
-                    width: '980',
-                    height: '463',
+                    width: 980,
+                    height: 463,
                   },
                 },
               ],
@@ -260,6 +236,7 @@ export const exampleDocument = {
         },
       ],
     },
+
     {
       type: 'heading',
       attrs: {
@@ -336,8 +313,8 @@ export const exampleDocument = {
                     id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
                     type: 'file',
                     collection: 'MediaServicesSample',
-                    width: '980',
-                    height: '463',
+                    width: 980,
+                    height: 463,
                   },
                 },
               ],
@@ -379,99 +356,9 @@ export const exampleDocument = {
         },
       ],
     },
-    {
-      type: 'heading',
-      attrs: {
-        level: 3,
-      },
-      content: [
-        {
-          type: 'text',
-          text: '6 Columns',
-        },
-      ],
-    },
-    {
-      type: 'mediaSingle',
-      attrs: {
-        layout: 'center',
-        columnSpan: 6,
-      },
-      content: [
-        {
-          type: 'media',
-          attrs: {
-            id: '6c6ae2d7-6c8c-4d9b-adfb-ac5698553585',
-            type: 'file',
-            collection: 'MediaServicesSample',
-            width: '980',
-            height: '463',
-          },
-        },
-      ],
-    },
-    {
-      type: 'heading',
-      attrs: {
-        level: 3,
-      },
-      content: [
-        {
-          type: 'text',
-          text: '8 Columns',
-        },
-      ],
-    },
-    {
-      type: 'mediaSingle',
-      attrs: {
-        layout: 'center',
-        columnSpan: 8,
-      },
-      content: [
-        {
-          type: 'media',
-          attrs: {
-            id: '6c6ae2d7-6c8c-4d9b-adfb-ac5698553585',
-            type: 'file',
-            collection: 'MediaServicesSample',
-            width: '980',
-            height: '463',
-          },
-        },
-      ],
-    },
-    {
-      type: 'heading',
-      attrs: {
-        level: 3,
-      },
-      content: [
-        {
-          type: 'text',
-          text: '12 Columns',
-        },
-      ],
-    },
-    {
-      type: 'mediaSingle',
-      attrs: {
-        layout: 'center',
-        columnSpan: 12,
-      },
-      content: [
-        {
-          type: 'media',
-          attrs: {
-            id: '6c6ae2d7-6c8c-4d9b-adfb-ac5698553585',
-            type: 'file',
-            collection: 'MediaServicesSample',
-            width: '980',
-            height: '463',
-          },
-        },
-      ],
-    },
+
+    /**********************************************************************/
+
     {
       type: 'heading',
       attrs: {
@@ -493,11 +380,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '6c6ae2d7-6c8c-4d9b-adfb-ac5698553585',
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: '980',
-            height: '463',
+            width: '1600',
+            height: '885',
           },
         },
       ],
@@ -523,15 +410,18 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '6c6ae2d7-6c8c-4d9b-adfb-ac5698553585',
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: '980',
-            height: '463',
+            width: '1600',
+            height: '885',
           },
         },
       ],
     },
+
+    /**********************************************************************/
+
     {
       type: 'heading',
       attrs: {
@@ -554,11 +444,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '6c6ae2d7-6c8c-4d9b-adfb-ac5698553585',
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: '980',
-            height: '463',
+            width: '1600',
+            height: '885',
           },
         },
       ],
@@ -573,6 +463,9 @@ export const exampleDocument = {
         },
       ],
     },
+
+    /**********************************************************************/
+
     {
       type: 'heading',
       attrs: {
@@ -595,11 +488,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '6c6ae2d7-6c8c-4d9b-adfb-ac5698553585',
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: '980',
-            height: '463',
+            width: '1600',
+            height: '885',
           },
         },
       ],
@@ -636,11 +529,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '6c6ae2d7-6c8c-4d9b-adfb-ac5698553585',
+            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: '980',
-            height: '463',
+            width: '1600',
+            height: '885',
           },
         },
       ],
@@ -655,6 +548,9 @@ export const exampleDocument = {
         },
       ],
     },
+
+    /**********************************************************************/
+
     {
       type: 'heading',
       attrs: {
