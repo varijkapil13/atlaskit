@@ -502,8 +502,16 @@ export class MediaPluginState {
       tr,
     } = this.view.state;
 
+    const mediaSingleNode = this.view.state.doc.nodeAt(from - 1)!;
+    if (!mediaSingleNode) {
+      return false;
+    }
+
+    // TODO: normalise grid alignment for wrapped -> center nodes
+
     this.view.dispatch(
       tr.setNodeMarkup(from - 1, schema.nodes.mediaSingle, {
+        ...mediaSingleNode.attrs,
         layout,
       }),
     );
