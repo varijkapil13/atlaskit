@@ -12,12 +12,12 @@ export const gridStyles = css`
     position: fixed;
     height: 100vh;
     width: 100%;
-    border-right: 1px solid ${colors.N40};
+    border-right: 1px solid ${colors.N30};
     pointer-events: none;
   }
 
   .gridLine {
-    border-left: 1px solid ${colors.N40};
+    border-left: 1px solid ${colors.N30};
     display: inline-block;
     box-sizing: border-box;
     height: 100%;

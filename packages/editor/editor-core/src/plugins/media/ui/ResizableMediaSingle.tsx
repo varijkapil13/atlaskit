@@ -244,6 +244,11 @@ export default class ResizableMediaSingle extends React.Component<
 
     console.log('re-render');
 
+    const handles = {
+      right: 'mediaSingle-resize-handle-right',
+      left: 'mediaSingle-resize-handle-left',
+    };
+
     return (
       <Wrapper
         width={this.props.width}
@@ -278,6 +283,20 @@ export default class ResizableMediaSingle extends React.Component<
             },
           )}
           snap={snap}
+          handleWrapperClass={'mediaSingle-resize-wrapper'}
+          handleClasses={handles}
+          handleStyles={{
+            right: {
+              width: '24px',
+              right: '-14px',
+              zIndex: 99,
+            },
+            left: {
+              width: '24px',
+              left: '-14px',
+              zIndex: 99,
+            },
+          }}
           enable={{
             left:
               validResizeModes.concat('wrap-right').indexOf(this.props.layout) >

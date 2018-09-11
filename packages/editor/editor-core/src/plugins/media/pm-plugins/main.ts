@@ -511,8 +511,11 @@ export class MediaPluginState {
     let columnSpan = mediaSingleNode.attrs.columnSpan;
 
     // reset to sane default
-    if (layout === 'wrap-left' || (layout === 'wrap-right' && columnSpan)) {
-      columnSpan = 4;
+    if (
+      layout === 'wrap-left' ||
+      (layout === 'wrap-right' && columnSpan && columnSpan > 6)
+    ) {
+      columnSpan = 6;
     }
 
     this.view.dispatch(
