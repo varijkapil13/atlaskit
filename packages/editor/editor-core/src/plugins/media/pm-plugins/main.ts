@@ -973,8 +973,27 @@ export const createPlugin = (
           schema,
           selection: { $anchor },
         } = state;
+
+        console.log('state.selection', state.selection);
+
         // When a media is already selected
         if (state.selection instanceof NodeSelection) {
+          const node = state.selection.node;
+          console.log('selected node', node);
+
+          if (node.type === schema.nodes.mediaSingle) {
+            const deco = Decoration.node(
+              state.selection.from,
+              state.selection.to,
+              {
+                class: 'mediaSingle-selected',
+              },
+            );
+
+            console.log('deco', deco);
+            return DecorationSet.create(state.doc, [deco]);
+          }
+
           return;
         }
 

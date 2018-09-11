@@ -1,12 +1,7 @@
 // @ts-ignore: unused variable
 // prettier-ignore
 import { css, Styles, StyledComponentClass } from 'styled-components';
-import {
-  akColorN90,
-  akColorB200,
-  akColorN70,
-  akColorN60,
-} from '@atlaskit/util-shared-styles';
+import { akColorB200, akColorN60 } from '@atlaskit/util-shared-styles';
 
 const mediaSingleSharedStyle = css`
   li .media-single {

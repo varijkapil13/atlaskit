@@ -282,7 +282,7 @@ export default class ResizableMediaSingle extends React.Component<
                 this.state.layout === 'wrap-right',
             },
           )}
-          snap={snap}
+          // snap={snap}
           handleWrapperClass={'mediaSingle-resize-wrapper'}
           handleClasses={handles}
           handleStyles={{

@@ -43,6 +43,94 @@ export const exampleDocument = {
         },
       ],
     },
+
+    {
+      type: 'heading',
+      attrs: {
+        level: 3,
+      },
+      content: [
+        {
+          type: 'text',
+          text: 'Two Equal',
+        },
+      ],
+    },
+    {
+      type: 'layoutSection',
+      attrs: {
+        layoutType: 'two_equal',
+      },
+      content: [
+        {
+          type: 'layoutColumn',
+          content: [
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: '4 columns',
+                },
+              ],
+            },
+            {
+              type: 'mediaSingle',
+              attrs: {
+                layout: 'center',
+                columnSpan: 4,
+              },
+              content: [
+                {
+                  type: 'media',
+                  attrs: {
+                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
+                    type: 'file',
+                    collection: 'MediaServicesSample',
+                    width: 980,
+                    height: 463,
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'layoutColumn',
+          content: [
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: '6 columns',
+                },
+              ],
+            },
+            {
+              type: 'mediaSingle',
+              attrs: {
+                layout: 'center',
+                columnSpan: 6,
+              },
+              content: [
+                {
+                  type: 'media',
+                  attrs: {
+                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
+                    type: 'file',
+                    collection: 'MediaServicesSample',
+                    width: 980,
+                    height: 463,
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
     {
       type: 'heading',
       attrs: {
