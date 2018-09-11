@@ -508,11 +508,18 @@ export class MediaPluginState {
     }
 
     // TODO: normalise grid alignment for wrapped -> center nodes
+    let columnSpan = mediaSingleNode.attrs.columnSpan;
+
+    // reset to sane default
+    if (layout === 'wrap-left' || (layout === 'wrap-right' && columnSpan)) {
+      columnSpan = 4;
+    }
 
     this.view.dispatch(
       tr.setNodeMarkup(from - 1, schema.nodes.mediaSingle, {
         ...mediaSingleNode.attrs,
         layout,
+        columnSpan,
       }),
     );
     return true;
