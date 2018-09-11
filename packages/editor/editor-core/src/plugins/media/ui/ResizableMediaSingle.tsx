@@ -4,7 +4,11 @@ import {
   akEditorWideLayoutWidth,
   akEditorFullPageMaxWidth,
 } from '@atlaskit/editor-common';
-import { default as Resizable } from 're-resizable';
+import {
+  default as Resizable,
+  ResizableDirection,
+  NumberSize,
+} from 're-resizable';
 import MediaSingle, {
   calcMediaWidth,
   calcMediaColumns,
@@ -25,6 +29,8 @@ type Props = MediaSingleProps & {
 
 type State = {
   width: number;
+  layout: MediaSingleLayout;
+  columns?: number;
 };
 
 // TODO: use attrs
@@ -68,6 +74,28 @@ export default class ResizableMediaSingle extends React.Component<
     this.props.displayGrid(true);
   };
 
+  handleResize = (
+    event: MouseEvent | TouchEvent,
+    direction: ResizableDirection,
+    elementRef: HTMLDivElement,
+    delta: NumberSize,
+  ) => {
+    if (!this.resizable || !this.resizable.state.original) {
+      return;
+    }
+
+    const newWidth = this.resizable.state.original.width + delta.width;
+    const newSize = this.calcNewSize(newWidth);
+    if (newSize.layout !== this.state.layout) {
+      console.warn('setting state to', newSize.layout);
+      this.setState({
+        layout: newSize.layout,
+        columns: newSize.columnSpan ? newSize.columnSpan : undefined,
+      });
+      this.props.updateSize(newSize.columnSpan, newSize.layout);
+    }
+  };
+
   calcWidth(props: Props) {
     if (props.columns) {
       return calcMediaWidth(props.columns, props.width, props.gridSize);
@@ -93,37 +121,26 @@ export default class ResizableMediaSingle extends React.Component<
   state = {
     // isResizing: false,
     width: this.calcWidth(this.props),
+    layout: this.props.layout,
+    columns: this.props.columns,
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Props) {
     const newWidth = this.calcWidth(nextProps);
     if (newWidth !== this.state.width) {
       console.log('setting new state', newWidth, 'from props', nextProps);
       this.setState({ width: newWidth });
     }
+
+    if (
+      nextProps.layout !== this.state.layout ||
+      nextProps.columns !== this.state.columns
+    ) {
+      this.setState({ layout: nextProps.layout, columns: nextProps.columns });
+    }
   }
 
-  handleResizeStop = (
-    event,
-    direction,
-    refToElement,
-    delta: { width: number; height: number },
-  ) => {
-    this.props.displayGrid(false);
-
-    if (!this.resizable) {
-      return;
-    }
-
-    if (!this.resizable.state.original) {
-      console.error('no original state');
-      return;
-    }
-
-    const newWidth = this.resizable.state.original.width + delta.width;
-    console.log('new width', newWidth, 'delta', delta);
-    // this.setState({width: newWidth});
-
+  calcNewSize = newWidth => {
     // size at full size
     const maxWidth = calcMediaWidth(
       6,
@@ -148,15 +165,45 @@ export default class ResizableMediaSingle extends React.Component<
         newLayout = 'center';
       }
 
-      this.props.updateSize(newColumns, newLayout);
+      return {
+        columnSpan: newColumns,
+        layout: newLayout,
+      };
     } else {
       // wide or full-width
-      const newLayout =
+      const newLayout: MediaSingleLayout =
         newWidth <= akEditorWideLayoutWidth ? 'wide' : 'full-width';
-      console.log('columns', this.props.columns);
-      console.log('layout', newLayout);
-      this.props.updateSize(null, newLayout);
+
+      return {
+        columnSpan: null,
+        layout: newLayout,
+      };
     }
+  };
+
+  handleResizeStop = (
+    event,
+    direction,
+    refToElement,
+    delta: { width: number; height: number },
+  ) => {
+    this.props.displayGrid(false);
+
+    if (!this.resizable) {
+      return;
+    }
+
+    if (!this.resizable.state.original) {
+      console.error('no original state');
+      return;
+    }
+
+    const newWidth = this.resizable.state.original.width + delta.width;
+    console.log('new width', newWidth, 'delta', delta);
+    // this.setState({width: newWidth});
+
+    const newSize = this.calcNewSize(newWidth);
+    this.props.updateSize(newSize.columnSpan, newSize.layout);
   };
 
   setResizableRef = ref => {
@@ -195,36 +242,39 @@ export default class ResizableMediaSingle extends React.Component<
       x,
     };
 
+    console.log('re-render');
+
     return (
       <Wrapper
         width={this.props.width}
         height={this.props.height}
-        layout={this.props.layout}
+        layout={this.state.layout}
       >
         <Resizable
           ref={this.setResizableRef}
+          onResize={this.handleResize}
           size={{
             width: calcMediaSingleWidth(
-              this.props.layout,
+              this.state.layout,
               this.state.width,
               this.props.containerWidth,
-              this.props.columns,
+              this.state.columns,
             ),
           }}
           style={
             {
-              float: floatMediaSingle(this.props.layout),
+              float: floatMediaSingle(this.state.layout),
             } as React.CSSProperties
           }
           className={classnames(
             'media-single',
-            this.props.layout,
+            this.state.layout,
             this.props.className,
             {
               'is-loading': this.props.isLoading,
               'media-wrapped':
-                this.props.layout === 'wrap-left' ||
-                this.props.layout === 'wrap-right',
+                this.state.layout === 'wrap-left' ||
+                this.state.layout === 'wrap-right',
             },
           )}
           snap={snap}
