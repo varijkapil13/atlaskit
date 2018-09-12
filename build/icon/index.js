@@ -23,7 +23,6 @@ module.exports = function(providedConfig /*: Config */) {
   const cleanSVG = require('./svgo/clean')(config);
   const customiseSVG = require('./svgo/customise')();
   const glyphTemplate = require('./glyph.template');
-  // const createIconsDocs = require('./createIconsDocs');
   const tsTemplate = require('./typescript.template');
 
   console.log('Processing icon glyphs.');
@@ -104,8 +103,6 @@ module.exports = function(providedConfig /*: Config */) {
       // Generate icon documentation data
       .then(icons => {
         console.log('\n 📦  Icons sorted.');
-        // const iconDocs = createIconsDocs(icons);
-        // return fs.outputFile('./utils/icons.js', iconDocs);
         return icons;
       })
       .catch(err => console.error(err))
