@@ -9,7 +9,7 @@ import {
   ResizableDirection,
   NumberSize,
 } from 're-resizable';
-import MediaSingle, {
+import {
   calcMediaWidth,
   calcMediaColumns,
 } from '../../../../../editor-common/src/ui/MediaSingle';
@@ -19,12 +19,17 @@ import {
   marginMediaSingle,
 } from '../../../../../editor-common/src/ui/MediaSingle/styled';
 import * as classnames from 'classnames';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { MediaSingleLayout } from '@atlaskit/editor-common';
+import { EditorState } from 'prosemirror-state';
+import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils';
 
 type Props = MediaSingleProps & {
   updateSize: (columnSpan: number | null, layout: MediaSingleLayout) => void;
   displayGrid: (show: boolean) => void;
+  // supportsLayouts: boolean;
+  getPos: () => number | undefined;
+  state: EditorState;
 };
 
 type State = {
@@ -105,7 +110,8 @@ export default class ResizableMediaSingle extends React.Component<
         props.layout === 'wrap-left' ||
         props.layout === 'wrap-right')
     ) {
-      return calcMediaWidth(props.columns, props.width, props.gridSize);
+      // return calcMediaWidth(props.columns, props.width, props.gridSize);
+      return calcMediaWidth(props.columns, props.width, 12);
     }
 
     if (props.layout === 'center') {
@@ -221,38 +227,66 @@ export default class ResizableMediaSingle extends React.Component<
 
   render() {
     // TODO: calc snapping based on grid plugin
-    // TODO: grid size is dependent on node
+
+    const pos = this.props.getPos();
+    if (!pos) {
+      console.warn('no position but interacting?');
+      return;
+    }
+    const $pos = this.props.state.doc.resolve(pos);
+    const supportsLayouts = $pos.parent.type.name === 'doc';
+    console.log(
+      'supports layout modes',
+      supportsLayouts,
+      'parent',
+      $pos.parent,
+    );
+
     const x: number[] = [];
-    const gridSize =
+    const gridBase =
       this.props.layout === 'wrap-left' || this.props.layout === 'wrap-right'
         ? 12
         : 6;
-    for (let i = 0; i <= gridSize; i++) {
+
+    const nodeGridWidth = findParentNodeOfTypeClosestToPos(
+      $pos,
+      this.props.state.schema.nodes.layoutColumn,
+    )
+      ? this.props.gridSize / 2
+      : this.props.gridSize;
+    const gridWidth =
+      this.props.layout === 'wrap-left' || this.props.layout === 'wrap-right'
+        ? nodeGridWidth
+        : nodeGridWidth / 2;
+
+    for (let i = 0; i <= gridWidth; i++) {
       x.push(
         calcMediaWidth(
           i,
           this.props.containerWidth || this.props.width,
-          gridSize,
+          gridBase,
         ),
       );
     }
 
     // FIXME: for these, we want extra styling on the resizer so that we apply the correct margins
-    x.push(akEditorWideLayoutWidth - 24);
-    if (
-      this.props.containerWidth &&
-      this.props.width >= this.props.containerWidth
-    ) {
-      // FIXME: padding from container?
-      // x.push(this.props.containerWidth - 96);
-      x.push(akEditorWideLayoutWidth + 120);
+    if (supportsLayouts) {
+      x.push(akEditorWideLayoutWidth - 24);
+      if (
+        this.props.containerWidth &&
+        this.props.width >= this.props.containerWidth
+      ) {
+        // FIXME: padding from container?
+        // x.push(this.props.containerWidth - 96);
+        x.push(akEditorWideLayoutWidth + 120);
+      }
     }
 
     const snap = {
       x,
     };
 
-    // console.log('re-render', this.props.selected);
+    console.log('re-render', this.props);
 
     const handles = {
       right: 'mediaSingle-resize-handle-right',

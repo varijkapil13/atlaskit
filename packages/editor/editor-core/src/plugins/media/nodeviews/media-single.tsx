@@ -6,8 +6,7 @@ import { MediaSingle } from '@atlaskit/editor-common';
 import { MediaNodeProps } from './media';
 import { stateKey, MediaPluginState } from '../pm-plugins/main';
 import ResizableMediaSingle from '../ui/ResizableMediaSingle';
-import { stateKey as gridPluginKey, displayGrid } from '../../../plugins/grid';
-import { hasParentNodeOfType } from 'prosemirror-utils';
+import { displayGrid } from '../../../plugins/grid';
 import { MediaSingleLayout } from '@atlaskit/editor-common';
 
 const DEFAULT_WIDTH = 250;
@@ -151,6 +150,19 @@ export default class MediaSingleNode extends Component<
       this.child.props.node.attrs.__key,
     );
 
+    const children = React.cloneElement(
+      this.child as ReactElement<any>,
+      {
+        cardDimensions: {
+          width: '100%',
+          height: '100%',
+        },
+        isMediaSingle: true,
+        progress,
+        onExternalImageLoaded: this.onExternalImageLoaded,
+      } as MediaNodeProps,
+    );
+
     if (width === null && this.mediaReady(mediaState)) {
       width = DEFAULT_WIDTH;
       height = DEFAULT_HEIGHT;
@@ -170,13 +182,15 @@ export default class MediaSingleNode extends Component<
       columns,
 
       containerWidth: this.props.width,
-      gridSize: /*hasParentNodeOfType(layoutColumn)(this.props.view.state.selection) ? 6 :*/ 12,
+      gridSize: 12,
       isLoading: !width,
     };
 
     return this.props.isResizable ? (
       <ResizableMediaSingle
         {...props}
+        getPos={this.props.getPos}
+        state={this.props.view.state}
         updateSize={this.updateSize}
         displayGrid={this.displayGrid}
       >
