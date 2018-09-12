@@ -1,5 +1,6 @@
 // @flow
 const path = require('path');
+const buildIcons = require('@atlaskit/icon-build-process');
 
 const config = {
   // Relative to this directory
@@ -8,6 +9,6 @@ const config = {
   destDir: path.resolve('../glyph'),
 };
 
-const buildIcons = require('@atlaskit/icon-build-process');
-
-buildIcons(config);
+buildIcons(config).then(icons => {
+  console.log('implement create icons docs here');
+});
