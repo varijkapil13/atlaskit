@@ -31,6 +31,8 @@ type State = {
   width: number;
   layout: MediaSingleLayout;
   columns?: number;
+  isResizing: boolean;
+  selected: boolean;
 };
 
 // TODO: use attrs
@@ -70,7 +72,7 @@ export default class ResizableMediaSingle extends React.Component<
   resizable: Resizable | null;
 
   handleResizeStart = () => {
-    // this.setState({ isResizing: true });
+    this.setState({ isResizing: true });
     this.props.displayGrid(true);
   };
 
@@ -119,10 +121,11 @@ export default class ResizableMediaSingle extends React.Component<
   }
 
   state = {
-    // isResizing: false,
+    isResizing: false,
     width: this.calcWidth(this.props),
     layout: this.props.layout,
     columns: this.props.columns,
+    selected: false,
   };
 
   componentWillReceiveProps(nextProps: Props) {
@@ -188,6 +191,7 @@ export default class ResizableMediaSingle extends React.Component<
     delta: { width: number; height: number },
   ) => {
     this.props.displayGrid(false);
+    this.setState({ isResizing: false });
 
     if (!this.resizable) {
       return;
@@ -235,14 +239,15 @@ export default class ResizableMediaSingle extends React.Component<
       this.props.width >= this.props.containerWidth
     ) {
       // FIXME: padding from container?
-      x.push(this.props.containerWidth - 96);
+      // x.push(this.props.containerWidth - 96);
+      x.push(akEditorWideLayoutWidth + 120);
     }
 
     const snap = {
       x,
     };
 
-    console.log('re-render');
+    // console.log('re-render', this.props.selected);
 
     const handles = {
       right: 'mediaSingle-resize-handle-right',
@@ -277,12 +282,14 @@ export default class ResizableMediaSingle extends React.Component<
             this.props.className,
             {
               'is-loading': this.props.isLoading,
+              'is-resizing': this.state.isResizing,
+              'mediaSingle-selected': this.state.selected,
               'media-wrapped':
                 this.state.layout === 'wrap-left' ||
                 this.state.layout === 'wrap-right',
             },
           )}
-          // snap={snap}
+          snap={snap}
           handleWrapperClass={'mediaSingle-resize-wrapper'}
           handleClasses={handles}
           handleStyles={{
@@ -308,7 +315,11 @@ export default class ResizableMediaSingle extends React.Component<
           onResizeStop={this.handleResizeStop}
           onResizeStart={this.handleResizeStart}
         >
-          {React.Children.only(this.props.children)}
+          {React.cloneElement(React.Children.only(this.props.children), {
+            onSelection: selected => {
+              this.setState({ selected });
+            },
+          })}
         </Resizable>
       </Wrapper>
     );

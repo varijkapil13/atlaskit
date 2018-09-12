@@ -38,11 +38,17 @@ const mediaSingleSharedStyle = css`
     height: 64px;
 
     border-radius: 6px;
-    /*background: ${akColorN60};*/
+  }
+
+  .mediaSingle-selected .mediaSingle-resize-handle-right::after,
+  .mediaSingle-selected .mediaSingle-resize-handle-left::after {
+    background: ${akColorN60};
   }
 
   .mediaSingle-resize-handle-right:hover::after,
-  .mediaSingle-resize-handle-left:hover::after {
+  .mediaSingle-resize-handle-left:hover::after,
+  .is-resizing .mediaSingle-resize-handle-right::after,
+  .is-resizing .mediaSingle-resize-handle-left::after {
     background: ${akColorB200};
   }
 `;
