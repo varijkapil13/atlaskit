@@ -17,7 +17,11 @@
     ],
     "repository": "https://bitbucket.org/atlassian/atlaskit-mk-2",
     "scripts": {},
-    "dependencies": {},
+    "dependencies": {
+      "@atlaskit/theme": "^6.0.2",
+      "babel-runtime": "^6.26.0",
+      "uuid": "^3.1.0"
+    },
     "peerDependencies": {
       "react": "^16.4.0",
       "styled-components": "^3.2.6"
