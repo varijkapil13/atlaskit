@@ -31,12 +31,10 @@ module.exports = function(providedConfig /*: Config */) {
   // Ensure the destination directory exists and empty it
   return (
     fs
-      .emptyDir(path.join(__dirname, config.processedDir))
-      .then(() => fs.emptyDir(path.join(__dirname, config.destDir)))
+      .emptyDir(config.processedDir)
+      .then(() => fs.emptyDir(config.destDir))
       // Read the contents of the source directory
-      .then(() =>
-        glob.sync('**/*.svg', { cwd: path.join(__dirname, config.srcDir) }),
-      )
+      .then(() => glob.sync('**/*.svg', { cwd: config.srcDir }))
       // Map over all the files
       .then(files =>
         Promise.all(
@@ -56,7 +54,7 @@ module.exports = function(providedConfig /*: Config */) {
             // Read the contents of the SVG file
             return (
               fs
-                .readFile(path.join(__dirname, config.srcDir, filepath))
+                .readFile(path.join(config.srcDir, filepath))
                 // Optimise the SVG
                 .then(rawSVG => cleanSVG(filepath, rawSVG))
                 .then(({ data: optimisedSVG }) => {
@@ -64,7 +62,7 @@ module.exports = function(providedConfig /*: Config */) {
                   return (
                     fs
                       .outputFile(
-                        path.join(__dirname, config.processedDir, filepath),
+                        path.join(config.processedDir, filepath),
                         optimisedSVG,
                       )
                       // customise the SVG to make it JSX ready
@@ -85,14 +83,14 @@ module.exports = function(providedConfig /*: Config */) {
                 // Write the component file
                 .then(({ code }) =>
                   fs.outputFile(
-                    path.join(__dirname, config.destDir, `${fileKey}.js`),
+                    path.join(config.destDir, `${fileKey}.js`),
                     code,
                   ),
                 )
                 // Write the TypeScript file
                 .then(() =>
                   fs.outputFile(
-                    path.join(__dirname, config.destDir, `${fileKey}.d.ts`),
+                    path.join(config.destDir, `${fileKey}.d.ts`),
                     tsTemplate,
                   ),
                 )
