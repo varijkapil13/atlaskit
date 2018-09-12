@@ -68,13 +68,13 @@ export class Card extends Component<CardProps, CardState> {
       context: currentContext,
       identifier: currentIdentifier,
     } = this.props;
-    const { context: nextContext, identifier: nextIdenfifier } = nextProps;
+    const { context: nextContext, identifier: nextIdentifier } = nextProps;
 
     if (
       currentContext !== nextContext ||
-      !deepEqual(currentIdentifier, nextIdenfifier)
+      !deepEqual(currentIdentifier, nextIdentifier)
     ) {
-      this.subscribe(nextIdenfifier, nextContext);
+      this.subscribe(nextIdentifier, nextContext);
     }
   }
 
