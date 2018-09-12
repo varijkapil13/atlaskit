@@ -99,7 +99,12 @@ export default class ResizableMediaSingle extends React.Component<
   };
 
   calcWidth(props: Props) {
-    if (props.columns) {
+    if (
+      props.columns &&
+      (props.layout === 'center' ||
+        props.layout === 'wrap-left' ||
+        props.layout === 'wrap-right')
+    ) {
       return calcMediaWidth(props.columns, props.width, props.gridSize);
     }
 
