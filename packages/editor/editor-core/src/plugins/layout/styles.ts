@@ -11,10 +11,11 @@ import { columnLayoutSharedStyle } from '@atlaskit/editor-common';
 export const layoutStyles = css`
   .ProseMirror {
     ${columnLayoutSharedStyle} [data-layout-type] {
-      position: relative;
+      /*position: relative;*/
       /*width: calc(100% + 26px);*/
       /* left-padding (12px) + layout-column-border (1px) */
       /*left: -13px;*/
+      /*left: 1px;*/
 
       /* Inner cursor located 26px from left */
       & > * {
