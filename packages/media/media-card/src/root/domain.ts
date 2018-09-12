@@ -4,7 +4,16 @@ import {
   MediaType,
 } from '@atlaskit/media-core';
 
-export type Identifier = UrlPreviewIdentifier | LinkIdentifier | FileIdentifier;
+export interface ExternalIdentifier {
+  dataURI: string;
+  name?: string;
+}
+
+export type Identifier =
+  | UrlPreviewIdentifier
+  | LinkIdentifier
+  | FileIdentifier
+  | ExternalIdentifier;
 export type Provider = MediaItemProvider | UrlPreviewProvider;
 
 export interface FileIdentifier {
@@ -29,3 +38,9 @@ export interface UrlPreviewIdentifier {
 export const isPreviewableType = (type: MediaType): boolean => {
   return ['audio', 'video', 'image'].indexOf(type) > -1;
 };
+
+// <Card
+//  identifier={{
+//    dataURI: 'asdas'
+//  }}
+// />
