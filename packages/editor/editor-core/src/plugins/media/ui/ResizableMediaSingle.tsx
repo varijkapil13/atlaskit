@@ -23,6 +23,7 @@ import styled from 'styled-components';
 import { MediaSingleLayout } from '@atlaskit/editor-common';
 import { EditorState } from 'prosemirror-state';
 import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils';
+import { LayoutSectionLayoutType } from '../../../../../editor-common/src/schema/nodes/layout-section';
 
 type Props = MediaSingleProps & {
   updateSize: (columnSpan: number | null, layout: MediaSingleLayout) => void;
@@ -235,12 +236,6 @@ export default class ResizableMediaSingle extends React.Component<
     }
     const $pos = this.props.state.doc.resolve(pos);
     const supportsLayouts = $pos.parent.type.name === 'doc';
-    console.log(
-      'supports layout modes',
-      supportsLayouts,
-      'parent',
-      $pos.parent,
-    );
 
     const x: number[] = [];
     const gridBase =
@@ -248,11 +243,17 @@ export default class ResizableMediaSingle extends React.Component<
         ? 12
         : 6;
 
-    const nodeGridWidth = findParentNodeOfTypeClosestToPos(
+    const parentLayout = findParentNodeOfTypeClosestToPos(
       $pos,
-      this.props.state.schema.nodes.layoutColumn,
-    )
-      ? this.props.gridSize / 2
+      this.props.state.schema.nodes.layoutSection,
+    );
+
+    // FIXME: not exhaustive (but we're changing layouts anyway)
+    const nodeGridWidth = parentLayout
+      ? (parentLayout.node.attrs.layoutType as LayoutSectionLayoutType) ===
+        'two_equal'
+        ? this.props.gridSize / 2
+        : this.props.gridSize / 3
       : this.props.gridSize;
     const gridWidth =
       this.props.layout === 'wrap-left' || this.props.layout === 'wrap-right'
