@@ -6,7 +6,7 @@ module.exports = (
   svg /*: () => mixed*/,
   displayName /*: string*/,
   wayHome /*: string*/,
-  size /*?: string */,
+  size /*:? string */,
 ) => `import React from 'react';
 import Icon from '${wayHome}';
 
