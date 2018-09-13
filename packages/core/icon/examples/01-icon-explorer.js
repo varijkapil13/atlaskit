@@ -5,8 +5,12 @@ import styled from 'styled-components';
 import Button from '@atlaskit/button';
 import { FieldTextStateless } from '@atlaskit/field-text';
 
-import allIcons from '../utils/icons';
+import iconIcons from '../utils/icons';
+import { iconInfo as objectIconInfo } from '@atlaskit/icon-object';
+import { iconInfo as fileTypeIconInfo } from '@atlaskit/icon-file-type';
 import IconExplorerCell from './utils/IconExplorerCell';
+
+const allIcons = { ...iconIcons, ...objectIconInfo, ...fileTypeIconInfo };
 
 const IconGridWrapper = styled.div`
   padding: 10px 5px 0;

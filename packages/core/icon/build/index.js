@@ -3,18 +3,20 @@ const path = require('path');
 const buildIcons = require('@atlaskit/icon-build-process');
 const pkgDir = require('pkg-dir');
 const fs = require('fs-extra');
-const createIconsDocs = require('./createIconsDocs');
+const synonyms = require('../utils/synonyms');
 
 const root = pkgDir.sync();
 
 const config = {
-  // Relative to this directory
   srcDir: path.resolve(root, 'svgs_raw'),
   processedDir: path.resolve(root, 'svgs'),
   destDir: path.resolve(root, 'glyph'),
+  maxWidth: 24,
+  maxHeight: 24,
+  glob: '**/*.svg',
 };
 
 buildIcons(config).then(icons => {
-  const iconDocs = createIconsDocs(icons);
+  const iconDocs = buildIcons.createIconDocs(icons, '@atlaskit/icon', synonyms);
   return fs.outputFile(path.resolve(root, 'utils/icons.js'), iconDocs);
 });
