@@ -54,9 +54,13 @@ export default function MediaSingle({
   gridSize,
 }: Props) {
   const mediaWidth =
-    columns && gridSize
+    columns &&
+    gridSize &&
+    (layout === 'center' || layout === 'wrap-left' || layout === 'wrap-right')
       ? calcMediaWidth(columns, containerWidth, gridSize)
       : width;
+
+  console.log('mediaWidth', mediaWidth, 'columns', columns);
 
   return (
     <Wrapper

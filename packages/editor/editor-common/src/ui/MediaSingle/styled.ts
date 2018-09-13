@@ -9,7 +9,6 @@ import {
   akEditorWideLayoutWidth,
   akEditorBreakoutPadding,
 } from '../../styles';
-import { calcMediaWidth } from '.';
 
 export function floatMediaSingle(layout: MediaSingleLayout): string {
   switch (layout) {
@@ -92,12 +91,12 @@ const MediaSingleDimensionHelper = ({
   height,
   layout,
   containerWidth = 0,
-  columnSpan = 0,
+  columnSpan,
 }: WrapperProps) => css`
-  /*width: ${calcMediaSingleWidth(layout, containerWidth, columnSpan)};*/
+  width: ${calcMediaSingleWidth(layout, width, containerWidth, columnSpan)};
   max-width: ${calcMediaSingleMaxWidth(layout, width, containerWidth)};
-  /*float: ${floatMediaSingle(layout)};*/
-  /*margin: ${marginMediaSingle(layout)};*/
+  float: ${floatMediaSingle(layout)};
+  margin: ${marginMediaSingle(layout)};
 
   &::after {
     content: '';
