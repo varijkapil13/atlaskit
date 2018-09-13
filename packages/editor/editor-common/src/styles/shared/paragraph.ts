@@ -18,4 +18,10 @@ export const paragraphSharedStyles = css`
       margin-top: 0;
     }
   }
+
+  table p,
+  li p {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 `;
