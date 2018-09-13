@@ -48,10 +48,10 @@ export default class MediaNode extends Component<MediaNodeProps, {}> {
   cancelProgress = () => {
     const {
       node: {
-        attrs: { __key },
+        attrs: { id },
       },
     } = this.props;
-    this.pluginState.removeNodeById(__key);
+    this.pluginState.removeNodeById(id);
   };
 
   render() {
@@ -59,7 +59,6 @@ export default class MediaNode extends Component<MediaNodeProps, {}> {
       node,
       providerFactory,
       selected,
-      view,
       cardDimensions,
       isMediaSingle,
       progress = 0,
@@ -87,7 +86,6 @@ export default class MediaNode extends Component<MediaNodeProps, {}> {
     return (
       <UIMedia
         key={`media-node-${id}`}
-        editorView={view}
         id={id!}
         type={type!}
         collection={collection!}
