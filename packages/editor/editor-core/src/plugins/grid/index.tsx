@@ -17,9 +17,9 @@ export const DEFAULT_GRID_SIZE = 12;
 // TODO: values will change once we figure out what break points
 // we want to change the grid size (if any)
 const calcGridSize = (width: number): number => {
-  if (width < 560) {
-    return 6;
-  }
+  // if (width < 560) {
+  //   return 6;
+  // }
 
   return DEFAULT_GRID_SIZE;
 };
