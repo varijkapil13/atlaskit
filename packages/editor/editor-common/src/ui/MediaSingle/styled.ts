@@ -48,7 +48,7 @@ export function calcMediaSingleWidth(
   }
 }
 
-function calcMaxWidth(
+export function calcMediaSingleMaxWidth(
   layout: MediaSingleLayout,
   width: number,
   containerWidth: number,
@@ -95,7 +95,7 @@ const MediaSingleDimensionHelper = ({
   columnSpan = 0,
 }: WrapperProps) => css`
   /*width: ${calcMediaSingleWidth(layout, containerWidth, columnSpan)};*/
-  max-width: ${calcMaxWidth(layout, width, containerWidth)};
+  max-width: ${calcMediaSingleMaxWidth(layout, width, containerWidth)};
   /*float: ${floatMediaSingle(layout)};*/
   /*margin: ${marginMediaSingle(layout)};*/
 
