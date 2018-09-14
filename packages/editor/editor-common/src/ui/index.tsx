@@ -2,7 +2,14 @@ export { default as Emoji } from './Emoji';
 export {
   default as MediaSingle,
   Props as MediaSingleProps,
+  validResizeModes as MediaSingleResizeModes,
+  validWidthModes as MediaSingleWidthModes,
 } from './MediaSingle';
+export {
+  MediaSingleDimensionHelper,
+  WrapperProps as MediaSingleDimensionHelperProps,
+} from './MediaSingle/styled';
+
 export { default as Mention } from './Mention';
 export { default as Popup } from './Popup';
 export { default as UnsupportedBlock } from './UnsupportedBlock';

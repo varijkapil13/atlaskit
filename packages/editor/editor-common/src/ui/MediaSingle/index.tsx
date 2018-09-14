@@ -18,7 +18,18 @@ export interface Props {
 const gutterSize = 24;
 const gridWidth = 680 + gutterSize;
 
-export function calcMediaWidth(
+export const validResizeModes: MediaSingleLayout[] = [
+  'center',
+  'wide',
+  'full-width',
+];
+export const validWidthModes: MediaSingleLayout[] = [
+  'center',
+  'wrap-left',
+  'wrap-right',
+];
+
+export function calcPxFromColumns(
   columns: number,
   containerWidth: number,
   gridSize: number,
@@ -31,7 +42,7 @@ export function calcMediaWidth(
   );
 }
 
-export function calcMediaColumns(
+export function calcColumnsFromPx(
   width: number,
   containerWidth: number,
   gridSize: number,
@@ -55,10 +66,8 @@ export default function MediaSingle({
   gridSize,
 }: Props) {
   const mediaWidth =
-    columns &&
-    gridSize &&
-    (layout === 'center' || layout === 'wrap-left' || layout === 'wrap-right')
-      ? calcMediaWidth(columns, containerWidth, gridSize)
+    columns && gridSize && validWidthModes.indexOf(layout) > -1
+      ? calcPxFromColumns(columns, containerWidth, gridSize)
       : width;
 
   return (
