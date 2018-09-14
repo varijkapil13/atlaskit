@@ -15,16 +15,19 @@ export interface Props {
   gridSize: number;
 }
 
+const gutterSize = 24;
+const gridWidth = 680 + gutterSize;
+
 export function calcMediaWidth(
   columns: number,
   containerWidth: number,
   gridSize: number,
 ): number {
-  const fullPagePadding = 32 * 2;
-  const innerWidthOfContainer = containerWidth - fullPagePadding;
   return Math.floor(
-    (containerWidth > 680 ? 680 : innerWidthOfContainer) / gridSize * columns -
-      24,
+    (containerWidth > gridWidth ? gridWidth : containerWidth) /
+      gridSize *
+      columns -
+      gutterSize,
   );
 }
 
@@ -33,12 +36,10 @@ export function calcMediaColumns(
   containerWidth: number,
   gridSize: number,
 ): number {
-  const fullPagePadding = 32 * 2;
-  const innerWidthOfContainer = containerWidth - fullPagePadding;
   return Math.ceil(
-    (width + 24) *
+    (width + gutterSize) *
       gridSize /
-      (containerWidth > 680 ? 680 : innerWidthOfContainer),
+      (containerWidth > gridWidth ? gridWidth : containerWidth),
   );
 }
 
@@ -59,8 +60,6 @@ export default function MediaSingle({
     (layout === 'center' || layout === 'wrap-left' || layout === 'wrap-right')
       ? calcMediaWidth(columns, containerWidth, gridSize)
       : width;
-
-  console.log('mediaWidth', mediaWidth, 'columns', columns);
 
   return (
     <Wrapper

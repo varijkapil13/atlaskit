@@ -11,17 +11,9 @@ export const paragraphSharedStyles = css`
     margin-top: ${blockNodesVerticalMargin};
     margin-bottom: 0;
     letter-spacing: -0.005em;
-    margin-left: 12px;
-    margin-right: 12px;
 
     &:first-child {
       margin-top: 0;
     }
-  }
-
-  table p,
-  li p {
-    margin-left: 0px;
-    margin-right: 0px;
   }
 `;

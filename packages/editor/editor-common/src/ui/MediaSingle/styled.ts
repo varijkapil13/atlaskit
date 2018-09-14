@@ -34,15 +34,13 @@ export function calcMediaSingleWidth(
         ? 'calc(50% - 12px)'
         : `${width}px`;
     case 'wide':
-      return width < akEditorWideLayoutWidth && !columnSpan
-        ? '100%'
-        : `${Math.min(akEditorWideLayoutWidth, width)}px`;
+      return `${Math.min(akEditorWideLayoutWidth, width)}px`;
     case 'full-width':
       return `${Math.min(width, containerWidth || 0) -
         akEditorBreakoutPadding}px`;
     default:
-      return width > akEditorFullPageMaxWidth - 12 * 2
-        ? `${akEditorFullPageMaxWidth - 12 * 2}px`
+      return width > akEditorFullPageMaxWidth
+        ? `${akEditorFullPageMaxWidth}px`
         : `${width}px`;
   }
 }
@@ -66,9 +64,9 @@ export function calcMediaSingleMaxWidth(
 export function marginMediaSingle(layout: MediaSingleLayout): string {
   switch (layout) {
     case 'wrap-right':
-      return '12px 12px 12px 24px';
+      return '12px auto 12px 24px';
     case 'wrap-left':
-      return '12px 24px 12px 12px';
+      return '12px 24px 12px auto';
     default:
       return '24px auto';
   }

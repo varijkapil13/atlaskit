@@ -4,7 +4,9 @@ import { colors } from '@atlaskit/theme';
 
 export const gridStyles = css`
   .gridParent {
-    width: 100%;
+    width: calc(100% + 24px);
+    margin-left: -12px;
+    margin-right: -12px;
     transform: scale(1);
   }
 

@@ -120,14 +120,14 @@ export default class ResizableMediaSingle extends React.Component<
     if (props.layout === 'center') {
       return Math.min(
         this.props.containerWidth || this.props.width,
-        akEditorFullPageMaxWidth - 24,
+        akEditorFullPageMaxWidth,
       );
     }
 
     if (props.layout === 'wide') {
       return Math.min(
         this.props.containerWidth || this.props.width,
-        akEditorWideLayoutWidth - 24,
+        akEditorWideLayoutWidth,
       );
     }
 
