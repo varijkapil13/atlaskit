@@ -10,7 +10,7 @@ import {
   akEditorBreakoutPadding,
 } from '../../styles';
 
-export function floatMediaSingle(layout: MediaSingleLayout): string {
+function float(layout: MediaSingleLayout): string {
   switch (layout) {
     case 'wrap-right':
       return 'right';
@@ -45,7 +45,7 @@ export function calcMediaSingleWidth(
   }
 }
 
-export function calcMediaSingleMaxWidth(
+function calcMaxWidth(
   layout: MediaSingleLayout,
   width: number,
   containerWidth: number,
@@ -61,7 +61,7 @@ export function calcMediaSingleMaxWidth(
   }
 }
 
-export function marginMediaSingle(layout: MediaSingleLayout): string {
+function calcMargin(layout: MediaSingleLayout): string {
   switch (layout) {
     case 'wrap-right':
       return '12px auto 12px 24px';
@@ -84,7 +84,7 @@ export interface WrapperProps {
  * Can't use `.attrs` to handle highly dynamic styles because we are still
  * supporting `styled-components` v1.
  */
-const MediaSingleDimensionHelper = ({
+export const MediaSingleDimensionHelper = ({
   width,
   height,
   layout,
@@ -92,9 +92,9 @@ const MediaSingleDimensionHelper = ({
   columnSpan,
 }: WrapperProps) => css`
   width: ${calcMediaSingleWidth(layout, width, containerWidth, columnSpan)};
-  max-width: ${calcMediaSingleMaxWidth(layout, width, containerWidth)};
-  float: ${floatMediaSingle(layout)};
-  margin: ${marginMediaSingle(layout)};
+  max-width: ${calcMaxWidth(layout, width, containerWidth)};
+  float: ${float(layout)};
+  margin: ${calcMargin(layout)};
 
   &::after {
     content: '';

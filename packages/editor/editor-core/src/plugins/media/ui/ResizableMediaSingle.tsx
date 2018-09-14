@@ -15,9 +15,7 @@ import {
 } from '../../../../../editor-common/src/ui/MediaSingle';
 import {
   calcMediaSingleWidth,
-  floatMediaSingle,
-  marginMediaSingle,
-  calcMediaSingleMaxWidth,
+  MediaSingleDimensionHelper,
 } from '../../../../../editor-common/src/ui/MediaSingle/styled';
 import * as classnames from 'classnames';
 import styled from 'styled-components';
@@ -48,7 +46,7 @@ export interface WrapperProps {
   width: number;
   height: number;
   containerWidth: number;
-  // columnSpan?: number;
+  columnSpan?: number;
 }
 
 const Wrapper: React.ComponentClass<
@@ -66,9 +64,7 @@ const Wrapper: React.ComponentClass<
   }
 
   & > div {
-    margin: ${(r: WrapperProps) => marginMediaSingle(r.layout)};
-    max-width: ${(r: WrapperProps) =>
-      calcMediaSingleMaxWidth(r.layout, r.width, r.containerWidth)};
+    ${MediaSingleDimensionHelper};
   }
 `;
 
@@ -302,6 +298,7 @@ export default class ResizableMediaSingle extends React.Component<
         height={this.props.height}
         layout={this.state.layout}
         containerWidth={this.props.containerWidth || this.props.width}
+        columnSpan={this.props.columns}
       >
         <Resizable
           ref={this.setResizableRef}
@@ -314,11 +311,6 @@ export default class ResizableMediaSingle extends React.Component<
               this.state.columns,
             ),
           }}
-          style={
-            {
-              float: floatMediaSingle(this.state.layout),
-            } as React.CSSProperties
-          }
           className={classnames(
             'media-single',
             this.state.layout,
