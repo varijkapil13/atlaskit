@@ -107,7 +107,7 @@ export const MediaSingleDimensionHelper = ({
   }
 `;
 
-const Wrapper: React.ComponentClass<
+export const Wrapper: React.ComponentClass<
   HTMLAttributes<{}> & WrapperProps
 > = styled.div`
   ${MediaSingleDimensionHelper};

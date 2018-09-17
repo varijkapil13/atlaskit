@@ -2,6 +2,7 @@ import * as React from 'react';
 import { MediaSingleLayout } from '../../schema';
 import Wrapper from './styled';
 import * as classnames from 'classnames';
+import { validWidthModes, calcPxFromColumns } from './grid';
 
 export interface Props {
   children: React.ReactChild;
@@ -13,45 +14,6 @@ export interface Props {
   className?: string;
   columns?: number;
   gridSize: number;
-}
-
-const gutterSize = 24;
-const gridWidth = 680 + gutterSize;
-
-export const validResizeModes: MediaSingleLayout[] = [
-  'center',
-  'wide',
-  'full-width',
-];
-export const validWidthModes: MediaSingleLayout[] = [
-  'center',
-  'wrap-left',
-  'wrap-right',
-];
-
-export function calcPxFromColumns(
-  columns: number,
-  containerWidth: number,
-  gridSize: number,
-): number {
-  return Math.floor(
-    (containerWidth > gridWidth ? gridWidth : containerWidth) /
-      gridSize *
-      columns -
-      gutterSize,
-  );
-}
-
-export function calcColumnsFromPx(
-  width: number,
-  containerWidth: number,
-  gridSize: number,
-): number {
-  return Math.ceil(
-    (width + gutterSize) *
-      gridSize /
-      (containerWidth > gridWidth ? gridWidth : containerWidth),
-  );
 }
 
 export default function MediaSingle({

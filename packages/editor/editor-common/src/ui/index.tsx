@@ -2,13 +2,21 @@ export { default as Emoji } from './Emoji';
 export {
   default as MediaSingle,
   Props as MediaSingleProps,
-  validResizeModes as MediaSingleResizeModes,
-  validWidthModes as MediaSingleWidthModes,
 } from './MediaSingle';
+
 export {
   MediaSingleDimensionHelper,
   WrapperProps as MediaSingleDimensionHelperProps,
+  Wrapper as WrapperMediaSingle,
+  calcMediaSingleWidth,
 } from './MediaSingle/styled';
+
+export {
+  validResizeModes as MediaSingleResizeModes,
+  validWidthModes as MediaSingleWidthModes,
+  calcPxFromColumns,
+  calcColumnsFromPx,
+} from './MediaSingle/grid';
 
 export { default as Mention } from './Mention';
 export { default as Popup } from './Popup';

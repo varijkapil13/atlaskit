@@ -4,17 +4,15 @@ import {
   akEditorWideLayoutWidth,
   akEditorFullPageMaxWidth,
   MediaSingleResizeModes,
+  calcPxFromColumns,
+  calcColumnsFromPx,
+  calcMediaSingleWidth,
 } from '@atlaskit/editor-common';
 import {
   default as Resizable,
   ResizableDirection,
   NumberSize,
 } from 're-resizable';
-import {
-  calcPxFromColumns,
-  calcColumnsFromPx,
-} from '../../../../../../editor-common/src/ui/MediaSingle';
-import { calcMediaSingleWidth } from '../../../../../../editor-common/src/ui/MediaSingle/styled';
 import * as classnames from 'classnames';
 import { MediaSingleLayout } from '@atlaskit/editor-common';
 import { EditorState } from 'prosemirror-state';
@@ -189,8 +187,6 @@ export default class ResizableMediaSingle extends React.Component<
   };
 
   render() {
-    // TODO: calc snapping based on grid plugin
-
     const pos = this.props.getPos();
     if (!pos) {
       return;
@@ -210,7 +206,7 @@ export default class ResizableMediaSingle extends React.Component<
       this.props.state.schema.nodes.layoutSection,
     );
 
-    // FIXME: not exhaustive (but we're changing layouts anyway)
+    // FIXME: not exhaustive, but we're changing layouts anyway
     const nodeGridWidth = parentLayout
       ? (parentLayout.node.attrs.layoutType as LayoutSectionLayoutType) ===
         'two_equal'
@@ -234,7 +230,7 @@ export default class ResizableMediaSingle extends React.Component<
 
     // FIXME: for these, we want extra styling on the resizer so that we apply the correct margins
     if (supportsLayouts) {
-      x.push(akEditorWideLayoutWidth - 24);
+      x.push(akEditorWideLayoutWidth);
       if (
         this.props.containerWidth &&
         this.props.width >= this.props.containerWidth
