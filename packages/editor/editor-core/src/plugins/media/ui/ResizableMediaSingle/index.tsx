@@ -4,7 +4,8 @@ import {
   akEditorWideLayoutWidth,
   MediaSingleResizeModes,
   calcPxFromColumns,
-  calcMediaSingleWidth,
+  calcPctFromPx,
+  snapToGrid,
 } from '@atlaskit/editor-common';
 import {
   default as Resizable,
@@ -18,11 +19,8 @@ import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils';
 import { LayoutSectionLayoutType } from '../../../../../../editor-common/src/schema/nodes/layout-section';
 import { Wrapper } from './styled';
 import { EditorAppearance } from '../../../../types';
-import {
-  calcPctFromPx,
-  calcPxFromPct,
-  snapToGrid,
-} from '../../../../../../editor-common/src/ui/MediaSingle/grid';
+
+type EnabledHandles = { left?: boolean; right?: boolean };
 
 type Props = MediaSingleProps & {
   updateSize: (width: number | null, layout: MediaSingleLayout) => void;
@@ -31,18 +29,27 @@ type Props = MediaSingleProps & {
   state: EditorState;
   appearance: EditorAppearance;
   gridSize: number;
+  containerWidth: number;
 };
 
-type State = {
-  isResizing: boolean;
-  selected: boolean;
-};
+const handleSides = ['left', 'right'];
 
-export default class ResizableMediaSingle extends React.Component<
-  Props,
-  State
+class Resizer extends React.Component<
+  Props & {
+    selected: boolean;
+    enable: EnabledHandles;
+    calcNewSize: (
+      newWidth: number,
+    ) => { layout: MediaSingleLayout; width: number | null };
+    snapPoints: number[];
+    width: number;
+  },
+  { isResizing: boolean }
 > {
   resizable: Resizable | null;
+  state = {
+    isResizing: false,
+  };
 
   handleResizeStart = () => {
     this.setState({ isResizing: true });
@@ -60,55 +67,9 @@ export default class ResizableMediaSingle extends React.Component<
     }
 
     const newWidth = this.resizable.state.original.width + delta.width;
-    const newSize = this.calcNewSize(newWidth);
+    const newSize = this.props.calcNewSize(newWidth);
     if (newSize.layout !== this.props.layout) {
       this.props.updateSize(newSize.width, newSize.layout);
-    }
-  };
-
-  state = {
-    isResizing: false,
-    selected: false,
-  };
-
-  calcNewSize = newWidth => {
-    // size at full size
-    const maxWidth = calcPxFromColumns(
-      6,
-      this.props.containerWidth || this.props.width,
-      6,
-      this.props.appearance,
-    );
-
-    if (newWidth <= maxWidth) {
-      let newLayout: MediaSingleLayout;
-      if (
-        this.props.layout === 'wrap-left' ||
-        this.props.layout === 'wrap-right'
-      ) {
-        newLayout = this.props.layout;
-      } else {
-        newLayout = 'center';
-      }
-
-      return {
-        width: calcPctFromPx(
-          newWidth,
-          this.props.containerWidth || 0,
-          this.props.gridSize,
-          this.props.appearance,
-        ),
-        layout: newLayout,
-      };
-    } else {
-      // wide or full-width
-      const newLayout: MediaSingleLayout =
-        newWidth <= akEditorWideLayoutWidth ? 'wide' : 'full-width';
-
-      return {
-        width: null,
-        layout: newLayout,
-      };
     }
   };
 
@@ -130,7 +91,7 @@ export default class ResizableMediaSingle extends React.Component<
     }
 
     const newWidth = this.resizable.state.original.width + delta.width;
-    const newSize = this.calcNewSize(newWidth);
+    const newSize = this.props.calcNewSize(newWidth);
     this.props.updateSize(newSize.width, newSize.layout);
   };
 
@@ -139,71 +100,158 @@ export default class ResizableMediaSingle extends React.Component<
   };
 
   render() {
+    const handleStyles = {};
+    const handles = {};
+    handleSides.forEach(side => {
+      handles[side] = `mediaSingle-resize-handle-${side}`;
+      handleStyles[side] = {
+        width: '24px',
+        [side]: '-14px',
+        zIndex: 99,
+      };
+    });
+
+    // Ideally, Resizable would let you pass in the component rather than
+    // the div. For now, we just apply the same styles using CSS
+    return (
+      <Resizable
+        ref={this.setResizableRef}
+        onResize={this.handleResize}
+        size={{
+          width: `${this.props.width}px`,
+        }}
+        className={classnames(
+          'media-single',
+          this.props.layout,
+          this.props.className,
+          {
+            'is-loading': this.props.isLoading,
+            'is-resizing': this.state.isResizing,
+            'mediaSingle-selected': this.props.selected,
+            'media-wrapped':
+              this.props.layout === 'wrap-left' ||
+              this.props.layout === 'wrap-right',
+          },
+        )}
+        snap={{ x: this.props.snapPoints }}
+        handleWrapperClass={'mediaSingle-resize-wrapper'}
+        handleClasses={handles}
+        handleStyles={handleStyles}
+        enable={this.props.enable}
+        onResizeStop={this.handleResizeStop}
+        onResizeStart={this.handleResizeStart}
+      >
+        {this.props.children}
+      </Resizable>
+    );
+  }
+}
+
+export default class ResizableMediaSingle extends React.Component<
+  Props,
+  { selected: boolean }
+> {
+  state = {
+    selected: false,
+  };
+
+  calcNewSize = (newWidth: number) => {
+    // size at full size (might be less than containerWidth since we
+    // take into account margins and control padding)
+    const { containerWidth, appearance, gridSize, layout } = this.props;
+
+    const maxWidth = calcPxFromColumns(6, containerWidth, 6, appearance);
+
+    if (newWidth <= maxWidth) {
+      let newLayout: MediaSingleLayout;
+      if (layout === 'wrap-left' || layout === 'wrap-right') {
+        newLayout = layout;
+      } else {
+        newLayout = 'center';
+      }
+
+      return {
+        width: calcPctFromPx(newWidth, containerWidth, gridSize, appearance),
+        layout: newLayout,
+      };
+    } else {
+      // wide or full-width
+      const newLayout: MediaSingleLayout =
+        newWidth <= akEditorWideLayoutWidth ? 'wide' : 'full-width';
+
+      return {
+        width: null,
+        layout: newLayout,
+      };
+    }
+  };
+
+  get gridBase() {
+    const { layout, gridSize } = this.props;
+    return layout === 'wrap-left' || layout === 'wrap-right'
+      ? gridSize
+      : gridSize / 2;
+  }
+
+  get gridSpan() {
+    const { gridSize } = this.props;
     const pos = this.props.getPos();
     if (typeof pos === 'undefined') {
-      return;
+      return gridSize;
     }
 
     const $pos = this.props.state.doc.resolve(pos);
-    const supportsLayouts = $pos.parent.type.name === 'doc';
-
-    const x: number[] = [];
-    const gridBase =
-      this.props.layout === 'wrap-left' || this.props.layout === 'wrap-right'
-        ? this.props.gridSize
-        : this.props.gridSize / 2;
-
     const parentLayout = findParentNodeOfTypeClosestToPos(
       $pos,
       this.props.state.schema.nodes.layoutSection,
     );
 
-    // FIXME: not exhaustive, but we're changing layouts anyway
-    const nodeGridWidth = parentLayout
-      ? (parentLayout.node.attrs.layoutType as LayoutSectionLayoutType) ===
+    if (parentLayout) {
+      // we're inside a layout, so we can't resize to full page
+      return (parentLayout.node.attrs.layoutType as LayoutSectionLayoutType) ===
         'two_equal'
-        ? this.props.gridSize / 2
-        : this.props.gridSize / 3
-      : this.props.gridSize;
-    const gridWidth =
-      this.props.layout === 'wrap-left' || this.props.layout === 'wrap-right'
-        ? nodeGridWidth
-        : nodeGridWidth / 2;
+        ? gridSize / 2
+        : gridSize / 3;
+    } else {
+      return gridSize;
+    }
+  }
 
-    // add grid snap points
-    for (let i = 0; i <= gridWidth; i++) {
-      x.push(
-        calcPxFromColumns(
-          i,
-          this.props.containerWidth || this.props.width,
-          gridBase,
-          this.props.appearance,
-        ),
+  /**
+   * The maxmimum number of grid columns this node can resize to.
+   */
+  get gridWidth() {
+    const { layout } = this.props;
+    return layout === 'wrap-left' || layout === 'wrap-right'
+      ? this.gridSpan
+      : this.gridSpan / 2;
+  }
+
+  get snapPoints() {
+    const { appearance, containerWidth } = this.props;
+    const snapPoints: number[] = [];
+    for (let i = 0; i <= this.gridWidth; i++) {
+      snapPoints.push(
+        calcPxFromColumns(i, containerWidth, this.gridBase, appearance),
       );
     }
 
-    // FIXME: for these, we want extra styling on the resizer so that we apply the correct margins
-    if (supportsLayouts && this.props.appearance === 'full-page') {
-      x.push(akEditorWideLayoutWidth);
-      if (
-        this.props.containerWidth &&
-        this.props.width >= this.props.containerWidth
-      ) {
-        // FIXME: padding from container?
-        // x.push(this.props.containerWidth - 96);
-        x.push(akEditorWideLayoutWidth + 120);
-      }
+    const pos = this.props.getPos();
+    if (typeof pos === 'undefined') {
+      return snapPoints;
     }
 
-    const snap = {
-      x,
-    };
+    const $pos = this.props.state.doc.resolve(pos);
+    const isTopLevel = $pos.parent.type.name === 'doc';
+    if (isTopLevel && appearance === 'full-page') {
+      snapPoints.push(akEditorWideLayoutWidth);
+      snapPoints.push(akEditorWideLayoutWidth + 120);
+    }
 
-    const handles = {
-      right: 'mediaSingle-resize-handle-right',
-      left: 'mediaSingle-resize-handle-left',
-    };
+    return snapPoints;
+  }
 
+  render() {
     let width = this.props.width;
     let height = this.props.height;
     if (this.props.gridWidth) {
@@ -219,8 +267,15 @@ export default class ResizableMediaSingle extends React.Component<
       height = dimensions.height;
     }
 
-    // FIXME: ideally Resizable would let you pass in the component rather than
-    // the div. For now, we just apply the same styles using CSS
+    const enable: EnabledHandles = {};
+    handleSides.forEach(side => {
+      const oppositeSide = side === 'left' ? 'right' : 'left';
+      enable[side] =
+        MediaSingleResizeModes.concat(
+          `wrap-${oppositeSide}` as MediaSingleLayout,
+        ).indexOf(this.props.layout) > -1;
+    });
+
     return (
       <Wrapper
         width={width}
@@ -229,59 +284,20 @@ export default class ResizableMediaSingle extends React.Component<
         containerWidth={this.props.containerWidth || this.props.width}
         forceWidth={!!this.props.gridWidth}
       >
-        <Resizable
-          ref={this.setResizableRef}
-          onResize={this.handleResize}
-          size={{
-            width: `${width}px`,
-          }}
-          className={classnames(
-            'media-single',
-            this.props.layout,
-            this.props.className,
-            {
-              'is-loading': this.props.isLoading,
-              'is-resizing': this.state.isResizing,
-              'mediaSingle-selected': this.state.selected,
-              'media-wrapped':
-                this.props.layout === 'wrap-left' ||
-                this.props.layout === 'wrap-right',
-            },
-          )}
-          snap={snap}
-          handleWrapperClass={'mediaSingle-resize-wrapper'}
-          handleClasses={handles}
-          handleStyles={{
-            right: {
-              width: '24px',
-              right: '-14px',
-              zIndex: 99,
-            },
-            left: {
-              width: '24px',
-              left: '-14px',
-              zIndex: 99,
-            },
-          }}
-          enable={{
-            left:
-              MediaSingleResizeModes.concat('wrap-right').indexOf(
-                this.props.layout,
-              ) > -1,
-            right:
-              MediaSingleResizeModes.concat('wrap-left').indexOf(
-                this.props.layout,
-              ) > -1,
-          }}
-          onResizeStop={this.handleResizeStop}
-          onResizeStart={this.handleResizeStart}
+        <Resizer
+          {...this.props}
+          selected={this.state.selected}
+          enable={enable}
+          calcNewSize={this.calcNewSize}
+          snapPoints={this.snapPoints}
+          width={width}
         >
           {React.cloneElement(React.Children.only(this.props.children), {
             onSelection: selected => {
               this.setState({ selected });
             },
           })}
-        </Resizable>
+        </Resizer>
       </Wrapper>
     );
   }

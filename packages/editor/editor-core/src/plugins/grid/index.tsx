@@ -35,7 +35,7 @@ export const createPlugin = ({ dispatch }) =>
         const editorWidth = widthPlugin.getState(state);
         return {
           gridSize: editorWidth ? calcGridSize(editorWidth) : DEFAULT_GRID_SIZE,
-          visible: true,
+          visible: false,
         };
       },
       apply: (tr, pluginState: GridPluginState, oldState, newState) => {

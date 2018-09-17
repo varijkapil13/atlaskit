@@ -21,7 +21,7 @@ function float(layout: MediaSingleLayout): string {
   }
 }
 
-export function calcMediaSingleWidth(
+function calcWidth(
   layout: MediaSingleLayout,
   width: number,
   containerWidth?: number,
@@ -92,7 +92,7 @@ export const MediaSingleDimensionHelper = ({
 }: WrapperProps) => css`
   width: ${forceWidth
     ? `${width}px`
-    : calcMediaSingleWidth(layout, width, containerWidth)};
+    : calcWidth(layout, width, containerWidth)};
   max-width: ${calcMaxWidth(layout, width, containerWidth)};
   float: ${float(layout)};
   margin: ${calcMargin(layout)};
@@ -108,12 +108,11 @@ export const MediaSingleDimensionHelper = ({
   }
 `;
 
-export const Wrapper: React.ComponentClass<
+const Wrapper: React.ComponentClass<
   HTMLAttributes<{}> & WrapperProps
 > = styled.div`
   ${MediaSingleDimensionHelper};
   position: relative;
-
   & > div {
     position: absolute;
     height: 100%;

@@ -7,14 +7,14 @@ export {
 export {
   MediaSingleDimensionHelper,
   WrapperProps as MediaSingleDimensionHelperProps,
-  Wrapper as WrapperMediaSingle,
-  calcMediaSingleWidth,
 } from './MediaSingle/styled';
 
 export {
   validResizeModes as MediaSingleResizeModes,
   validWidthModes as MediaSingleWidthModes,
   calcPxFromColumns,
+  calcPctFromPx,
+  snapToGrid,
 } from './MediaSingle/grid';
 
 export { default as Mention } from './Mention';

@@ -169,7 +169,7 @@ export class ExampleEditor extends React.Component<Props, State> {
             media={{
               provider: mediaProvider,
               allowMediaSingle: true,
-              UNSAFE_allowMediaSingleResizing: false,
+              UNSAFE_allowMediaSingleResizing: true,
             }}
             placeholder="Write something..."
             shouldFocus={false}

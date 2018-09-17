@@ -2,14 +2,13 @@ import * as React from 'react';
 import { Component, ReactElement } from 'react';
 import { Node as PMNode } from 'prosemirror-model';
 import { EditorView } from 'prosemirror-view';
-import { MediaSingle, calcPxFromColumns } from '@atlaskit/editor-common';
+import { MediaSingle } from '@atlaskit/editor-common';
 import { MediaNodeProps } from './media';
 import { stateKey, MediaPluginState } from '../pm-plugins/main';
 import ResizableMediaSingle from '../ui/ResizableMediaSingle';
 import { displayGrid } from '../../../plugins/grid';
 import { MediaSingleLayout } from '@atlaskit/editor-common';
 import { EditorAppearance } from '../../../types';
-import { snapToGrid } from '../../../../../editor-common/src/ui/MediaSingle/grid';
 
 const DEFAULT_WIDTH = 250;
 const DEFAULT_HEIGHT = 200;
@@ -117,8 +116,6 @@ export default class MediaSingleNode extends Component<
     if (typeof pos === 'undefined') {
       return;
     }
-
-    console.warn('applying size', width);
 
     return dispatch(
       state.tr.setNodeMarkup(pos, undefined, {

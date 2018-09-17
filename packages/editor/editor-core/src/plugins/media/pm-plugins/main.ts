@@ -508,21 +508,21 @@ export class MediaPluginState {
     }
 
     // TODO: normalise grid alignment for wrapped -> center nodes
-    let columnSpan = mediaSingleNode.attrs.columnSpan;
+    let width = mediaSingleNode.attrs.width;
 
     // reset to sane default
     if (
       layout === 'wrap-left' ||
-      (layout === 'wrap-right' && columnSpan && columnSpan > 6)
+      (layout === 'wrap-right' && width && width > 0.5)
     ) {
-      columnSpan = 6;
+      width = 0.5;
     }
 
     this.view.dispatch(
       tr.setNodeMarkup(from - 1, schema.nodes.mediaSingle, {
         ...mediaSingleNode.attrs,
         layout,
-        columnSpan,
+        width,
       }),
     );
     return true;
@@ -974,12 +974,9 @@ export const createPlugin = (
           selection: { $anchor },
         } = state;
 
-        console.log('state.selection', state.selection);
-
         // When a media is already selected
         if (state.selection instanceof NodeSelection) {
           const node = state.selection.node;
-          console.log('selected node', node);
 
           if (node.type === schema.nodes.mediaSingle) {
             const deco = Decoration.node(
@@ -990,7 +987,6 @@ export const createPlugin = (
               },
             );
 
-            console.log('deco', deco);
             return DecorationSet.create(state.doc, [deco]);
           }
 

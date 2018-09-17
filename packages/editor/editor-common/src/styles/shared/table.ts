@@ -33,7 +33,6 @@ const tableSharedStyle = css`
     border: 1px solid ${akEditorTableBorder};
     font-size: ${fontSize}px;
     width: 100%;
-    left: 0px;
 
     &[data-autosize='true'] {
       table-layout: auto;

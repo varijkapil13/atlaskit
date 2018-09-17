@@ -34,8 +34,6 @@ export function calcPxFromColumns(
       ? Math.min(containerWidth, gridWidth)
       : gridWidth;
 
-  console.log('using max width', maxWidth);
-
   return maxWidth / gridSize * columns - gutterSize;
 }
 
@@ -91,7 +89,6 @@ export function calcPctFromPx(
       : gridWidth;
 
   const res = (width + gutterSize) / maxWidth;
-  console.log('using', width, 'got', res);
 
   return res;
 }
@@ -120,18 +117,8 @@ export const snapToGrid = (
     appearance,
   );
 
-  const dim = {
+  return {
     height: height / width * alignedWidth,
     width: alignedWidth,
   };
-
-  console.log(
-    'calculated dimensions',
-    dim,
-    'given height',
-    height,
-    'width',
-    width,
-  );
-  return dim;
 };
