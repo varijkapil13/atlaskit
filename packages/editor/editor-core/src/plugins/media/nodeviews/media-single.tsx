@@ -9,10 +9,7 @@ import ResizableMediaSingle from '../ui/ResizableMediaSingle';
 import { displayGrid } from '../../../plugins/grid';
 import { MediaSingleLayout } from '@atlaskit/editor-common';
 import { EditorAppearance } from '../../../types';
-import {
-  calcColumnsFromPx,
-  calcPxFromPct,
-} from '../../../../../editor-common/src/ui/MediaSingle/grid';
+import { snapToGrid } from '../../../../../editor-common/src/ui/MediaSingle/grid';
 
 const DEFAULT_WIDTH = 250;
 const DEFAULT_HEIGHT = 200;
@@ -158,39 +155,6 @@ export default class MediaSingleNode extends Component<
       this.child.props.node.attrs.__key,
     );
 
-    const gridSize = 12;
-    if (mediaSingleWidth) {
-      // align to next grid
-      // FIXME: move to state
-      // const columnSpan = calcColumnsFromPx(mediaSingleWidth, this.props.containerWidth, gridSize, this.props.appearance);
-      console.log('media single had width', mediaSingleWidth);
-      const pxWidth = calcPxFromPct(
-        mediaSingleWidth,
-        this.props.containerWidth,
-        gridSize,
-        this.props.appearance,
-      );
-      const columnSpan = Math.round(
-        calcColumnsFromPx(
-          pxWidth,
-          this.props.containerWidth,
-          gridSize,
-          this.props.appearance,
-        ),
-      );
-      console.log('consumes', columnSpan, 'columns');
-      const alignedWidth = calcPxFromColumns(
-        columnSpan,
-        this.props.containerWidth,
-        gridSize,
-        this.props.appearance,
-      );
-
-      height = height * (alignedWidth / width);
-      width = alignedWidth;
-      console.log('calculated new width', alignedWidth);
-    }
-
     const children = React.cloneElement(
       this.child as ReactElement<any>,
       {
@@ -224,7 +188,8 @@ export default class MediaSingleNode extends Component<
       containerWidth: this.props.containerWidth,
       isLoading: !width,
       appearance: this.props.appearance,
-      forceWidth: mediaSingleWidth,
+      gridSize: 12,
+      gridWidth: mediaSingleWidth,
     };
 
     return this.props.isResizable ? (
@@ -234,7 +199,6 @@ export default class MediaSingleNode extends Component<
         state={this.props.view.state}
         updateSize={this.updateSize}
         displayGrid={this.displayGrid}
-        gridSize={gridSize}
       >
         {children}
       </ResizableMediaSingle>

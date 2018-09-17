@@ -76,6 +76,7 @@ export interface WrapperProps {
   width: number;
   height: number;
   containerWidth?: number;
+  forceWidth: boolean;
 }
 
 /**
@@ -87,8 +88,11 @@ export const MediaSingleDimensionHelper = ({
   height,
   layout,
   containerWidth = 0,
+  forceWidth,
 }: WrapperProps) => css`
-  width: ${calcMediaSingleWidth(layout, width, containerWidth)};
+  width: ${forceWidth
+    ? `${width}px`
+    : calcMediaSingleWidth(layout, width, containerWidth)};
   max-width: ${calcMaxWidth(layout, width, containerWidth)};
   float: ${float(layout)};
   margin: ${calcMargin(layout)};

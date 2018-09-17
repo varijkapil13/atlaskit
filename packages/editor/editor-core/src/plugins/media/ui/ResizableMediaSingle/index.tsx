@@ -18,7 +18,11 @@ import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils';
 import { LayoutSectionLayoutType } from '../../../../../../editor-common/src/schema/nodes/layout-section';
 import { Wrapper } from './styled';
 import { EditorAppearance } from '../../../../types';
-import { calcPctFromPx } from '../../../../../../editor-common/src/ui/MediaSingle/grid';
+import {
+  calcPctFromPx,
+  calcPxFromPct,
+  snapToGrid,
+} from '../../../../../../editor-common/src/ui/MediaSingle/grid';
 
 type Props = MediaSingleProps & {
   updateSize: (width: number | null, layout: MediaSingleLayout) => void;
@@ -136,7 +140,7 @@ export default class ResizableMediaSingle extends React.Component<
 
   render() {
     const pos = this.props.getPos();
-    if (!pos) {
+    if (typeof pos === 'undefined') {
       return;
     }
 
@@ -200,20 +204,36 @@ export default class ResizableMediaSingle extends React.Component<
       left: 'mediaSingle-resize-handle-left',
     };
 
+    let width = this.props.width;
+    let height = this.props.height;
+    if (this.props.gridWidth) {
+      const dimensions = snapToGrid(
+        this.props.gridWidth,
+        this.props.width,
+        this.props.height,
+        this.props.gridSize,
+        this.props.containerWidth,
+        this.props.appearance,
+      );
+      width = dimensions.width;
+      height = dimensions.height;
+    }
+
     // FIXME: ideally Resizable would let you pass in the component rather than
     // the div. For now, we just apply the same styles using CSS
     return (
       <Wrapper
-        width={this.props.width}
-        height={this.props.height}
+        width={width}
+        height={height}
         layout={this.props.layout}
         containerWidth={this.props.containerWidth || this.props.width}
+        forceWidth={!!this.props.gridWidth}
       >
         <Resizable
           ref={this.setResizableRef}
           onResize={this.handleResize}
           size={{
-            width: this.props.width,
+            width: `${width}px`,
           }}
           className={classnames(
             'media-single',

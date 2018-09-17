@@ -95,3 +95,43 @@ export function calcPctFromPx(
 
   return res;
 }
+
+export const snapToGrid = (
+  gridWidth,
+  width,
+  height,
+  gridSize,
+  containerWidth,
+  appearance,
+) => {
+  const pxWidth = calcPxFromPct(
+    gridWidth,
+    containerWidth,
+    gridSize,
+    appearance,
+  );
+  const columnSpan = Math.round(
+    calcColumnsFromPx(pxWidth, containerWidth, gridSize, appearance),
+  );
+  const alignedWidth = calcPxFromColumns(
+    columnSpan,
+    containerWidth,
+    gridSize,
+    appearance,
+  );
+
+  const dim = {
+    height: height / width * alignedWidth,
+    width: alignedWidth,
+  };
+
+  console.log(
+    'calculated dimensions',
+    dim,
+    'given height',
+    height,
+    'width',
+    width,
+  );
+  return dim;
+};
