@@ -17,6 +17,7 @@ import { ClickAreaBlock } from '../Addon';
 import { tableCommentEditorStyles } from '../../plugins/table/ui/styles';
 import WithFlash from '../WithFlash';
 import { akEditorMenuZIndex } from '@atlaskit/editor-common';
+import WidthDetector from '../WidthDetector';
 
 export interface CommentEditorProps {
   isMaxContentSizeReached?: boolean;
@@ -93,7 +94,8 @@ const ContentArea = styled(ContentStyles)`
   }
 
   .gridParent {
-    margin: 0 20px 20px;
+    margin: 0 10px 10px 10px;
+    width: 100%;
   }
 
   padding: ${TableControlsPadding}px;
@@ -180,9 +182,10 @@ export default class Editor extends React.Component<
           </MainToolbar>
           <ClickAreaBlock editorView={editorView}>
             <ContentArea
-              className="ak-editor-content-area"
+              className="ak-editor-content-area ak-editor-comment"
               innerRef={ref => (this.containerElement = ref)}
             >
+              <WidthDetector editorView={editorView!} />
               {customContentComponents}
               <PluginSlot
                 editorView={editorView}

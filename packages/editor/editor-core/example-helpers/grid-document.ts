@@ -24,11 +24,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            id: 'b5425161-d01f-412e-87c8-467e884a8280',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: 1600,
-            height: 885,
+            width: 2750,
+            height: 2061,
           },
         },
       ],
@@ -84,11 +84,11 @@ export const exampleDocument = {
                 {
                   type: 'media',
                   attrs: {
-                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
+                    id: 'b5425161-d01f-412e-87c8-467e884a8280',
                     type: 'file',
                     collection: 'MediaServicesSample',
-                    width: 980,
-                    height: 463,
+                    width: 2750,
+                    height: 2061,
                   },
                 },
               ],
@@ -117,11 +117,11 @@ export const exampleDocument = {
                 {
                   type: 'media',
                   attrs: {
-                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
+                    id: 'b5425161-d01f-412e-87c8-467e884a8280',
                     type: 'file',
                     collection: 'MediaServicesSample',
-                    width: 980,
-                    height: 463,
+                    width: 2750,
+                    height: 2061,
                   },
                 },
               ],
@@ -153,11 +153,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            id: 'b5425161-d01f-412e-87c8-467e884a8280',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: 1600,
-            height: 885,
+            width: 2750,
+            height: 2061,
           },
         },
       ],
@@ -197,11 +197,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            id: 'b5425161-d01f-412e-87c8-467e884a8280',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: 1600,
-            height: 885,
+            width: 2750,
+            height: 2061,
           },
         },
       ],
@@ -231,11 +231,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            id: 'b5425161-d01f-412e-87c8-467e884a8280',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: 1600,
-            height: 885,
+            width: 2750,
+            height: 2061,
           },
         },
       ],
@@ -265,11 +265,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            id: 'b5425161-d01f-412e-87c8-467e884a8280',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: 1600,
-            height: 885,
+            width: 2750,
+            height: 2061,
           },
         },
       ],
@@ -299,11 +299,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            id: 'b5425161-d01f-412e-87c8-467e884a8280',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: 1600,
-            height: 885,
+            width: 2750,
+            height: 2061,
           },
         },
       ],
@@ -363,11 +363,11 @@ export const exampleDocument = {
                 {
                   type: 'media',
                   attrs: {
-                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
+                    id: 'b5425161-d01f-412e-87c8-467e884a8280',
                     type: 'file',
                     collection: 'MediaServicesSample',
-                    width: 980,
-                    height: 463,
+                    width: 2750,
+                    height: 2061,
                   },
                 },
               ],
@@ -396,11 +396,11 @@ export const exampleDocument = {
                 {
                   type: 'media',
                   attrs: {
-                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
+                    id: 'b5425161-d01f-412e-87c8-467e884a8280',
                     type: 'file',
                     collection: 'MediaServicesSample',
-                    width: 980,
-                    height: 463,
+                    width: 2750,
+                    height: 2061,
                   },
                 },
               ],
@@ -450,11 +450,11 @@ export const exampleDocument = {
                 {
                   type: 'media',
                   attrs: {
-                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
+                    id: 'b5425161-d01f-412e-87c8-467e884a8280',
                     type: 'file',
                     collection: 'MediaServicesSample',
-                    width: 980,
-                    height: 463,
+                    width: 2750,
+                    height: 2061,
                   },
                 },
               ],
@@ -483,11 +483,11 @@ export const exampleDocument = {
                 {
                   type: 'media',
                   attrs: {
-                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
+                    id: 'b5425161-d01f-412e-87c8-467e884a8280',
                     type: 'file',
                     collection: 'MediaServicesSample',
-                    width: 980,
-                    height: 463,
+                    width: 2750,
+                    height: 2061,
                   },
                 },
               ],
@@ -516,11 +516,11 @@ export const exampleDocument = {
                 {
                   type: 'media',
                   attrs: {
-                    id: '9d008e18-fa3c-4440-9aa6-60a23b54f534',
+                    id: 'b5425161-d01f-412e-87c8-467e884a8280',
                     type: 'file',
                     collection: 'MediaServicesSample',
-                    width: 980,
-                    height: 463,
+                    width: 2750,
+                    height: 2061,
                   },
                 },
               ],
@@ -553,11 +553,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            id: 'b5425161-d01f-412e-87c8-467e884a8280',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: 1600,
-            height: 885,
+            width: 2750,
+            height: 2061,
           },
         },
       ],
@@ -583,11 +583,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: '67a0ce04-b4da-4e61-a08b-fde318186d43',
+            id: 'b5425161-d01f-412e-87c8-467e884a8280',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: 1600,
-            height: 885,
+            width: 2750,
+            height: 2061,
           },
         },
       ],
@@ -616,11 +616,11 @@ export const exampleDocument = {
         {
           type: 'media',
           attrs: {
-            id: 'dd38348e-42fe-4656-b83f-6bcd1e369ce8',
+            id: 'b5425161-d01f-412e-87c8-467e884a8280',
             type: 'file',
             collection: 'MediaServicesSample',
-            width: 4096,
-            height: 2731,
+            width: 2750,
+            height: 2061,
           },
         },
       ],

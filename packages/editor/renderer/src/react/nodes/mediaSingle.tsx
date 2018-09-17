@@ -92,6 +92,7 @@ export default class MediaSingle extends Component<
             containerWidth={containerWidth}
             gridSize={12}
             columns={props.columnSpan}
+            appearance={props.appearance}
           >
             {media}
           </ExtendedUIMediaSingle>

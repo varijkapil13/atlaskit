@@ -8,6 +8,7 @@ import { stateKey, MediaPluginState } from '../pm-plugins/main';
 import ResizableMediaSingle from '../ui/ResizableMediaSingle';
 import { displayGrid } from '../../../plugins/grid';
 import { MediaSingleLayout } from '@atlaskit/editor-common';
+import { EditorAppearance } from '../../../types';
 
 const DEFAULT_WIDTH = 250;
 const DEFAULT_HEIGHT = 200;
@@ -18,6 +19,7 @@ export interface MediaSingleNodeProps {
   width: number;
   isResizable?: boolean;
   getPos: () => number | undefined;
+  appearance: EditorAppearance;
 }
 
 export interface MediaSingleNodeState {
@@ -184,6 +186,7 @@ export default class MediaSingleNode extends Component<
       containerWidth: this.props.width,
       gridSize: 12,
       isLoading: !width,
+      appearance: this.props.appearance,
     };
 
     return this.props.isResizable ? (

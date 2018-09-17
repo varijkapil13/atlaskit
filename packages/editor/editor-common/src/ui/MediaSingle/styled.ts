@@ -39,7 +39,7 @@ export function calcMediaSingleWidth(
       return `${Math.min(width, containerWidth || 0) -
         akEditorBreakoutPadding}px`;
     default:
-      return width > akEditorFullPageMaxWidth
+      return width > akEditorFullPageMaxWidth && !columnSpan
         ? `${akEditorFullPageMaxWidth}px`
         : `${width}px`;
   }

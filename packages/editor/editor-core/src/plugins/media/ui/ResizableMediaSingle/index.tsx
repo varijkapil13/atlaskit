@@ -19,12 +19,14 @@ import { EditorState } from 'prosemirror-state';
 import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils';
 import { LayoutSectionLayoutType } from '../../../../../../editor-common/src/schema/nodes/layout-section';
 import { Wrapper } from './styled';
+import { EditorAppearance } from '../../../../types';
 
 type Props = MediaSingleProps & {
   updateSize: (columnSpan: number | null, layout: MediaSingleLayout) => void;
   displayGrid: (show: boolean) => void;
   getPos: () => number | undefined;
   state: EditorState;
+  appearance: EditorAppearance;
 };
 
 type State = {
@@ -59,7 +61,6 @@ export default class ResizableMediaSingle extends React.Component<
     const newWidth = this.resizable.state.original.width + delta.width;
     const newSize = this.calcNewSize(newWidth);
     if (newSize.layout !== this.state.layout) {
-      console.warn('setting state to', newSize.layout);
       this.setState({
         layout: newSize.layout,
         columns: newSize.columnSpan ? newSize.columnSpan : undefined,
@@ -75,7 +76,12 @@ export default class ResizableMediaSingle extends React.Component<
         props.layout === 'wrap-left' ||
         props.layout === 'wrap-right')
     ) {
-      return calcPxFromColumns(props.columns, props.width, props.gridSize);
+      return calcPxFromColumns(
+        props.columns,
+        props.width,
+        props.gridSize,
+        this.props.appearance,
+      );
     }
 
     if (props.layout === 'center') {
@@ -123,6 +129,7 @@ export default class ResizableMediaSingle extends React.Component<
       6,
       this.props.containerWidth || this.props.width,
       6,
+      this.props.appearance,
     );
 
     if (newWidth <= maxWidth) {
@@ -131,6 +138,7 @@ export default class ResizableMediaSingle extends React.Component<
         newWidth,
         this.props.containerWidth || this.props.width,
         this.props.gridSize,
+        this.props.appearance,
       );
 
       let newLayout: MediaSingleLayout;
@@ -218,18 +226,20 @@ export default class ResizableMediaSingle extends React.Component<
         ? nodeGridWidth
         : nodeGridWidth / 2;
 
+    // add grid snap points
     for (let i = 0; i <= gridWidth; i++) {
       x.push(
         calcPxFromColumns(
           i,
           this.props.containerWidth || this.props.width,
           gridBase,
+          this.props.appearance,
         ),
       );
     }
 
     // FIXME: for these, we want extra styling on the resizer so that we apply the correct margins
-    if (supportsLayouts) {
+    if (supportsLayouts && this.props.appearance === 'full-page') {
       x.push(akEditorWideLayoutWidth);
       if (
         this.props.containerWidth &&
@@ -244,8 +254,6 @@ export default class ResizableMediaSingle extends React.Component<
     const snap = {
       x,
     };
-
-    // console.log('re-render', this.props, validResizeModes);
 
     const handles = {
       right: 'mediaSingle-resize-handle-right',

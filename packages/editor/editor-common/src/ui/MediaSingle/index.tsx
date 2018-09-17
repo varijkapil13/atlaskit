@@ -3,6 +3,7 @@ import { MediaSingleLayout } from '../../schema';
 import Wrapper from './styled';
 import * as classnames from 'classnames';
 import { validWidthModes, calcPxFromColumns } from './grid';
+import { EditorAppearance } from 'src/types';
 
 export interface Props {
   children: React.ReactChild;
@@ -14,6 +15,7 @@ export interface Props {
   className?: string;
   columns?: number;
   gridSize: number;
+  appearance: EditorAppearance;
 }
 
 export default function MediaSingle({
@@ -26,10 +28,11 @@ export default function MediaSingle({
   className,
   columns,
   gridSize,
+  appearance,
 }: Props) {
   const mediaWidth =
     columns && gridSize && validWidthModes.indexOf(layout) > -1
-      ? calcPxFromColumns(columns, containerWidth, gridSize)
+      ? calcPxFromColumns(columns, containerWidth, gridSize, appearance)
       : width;
 
   return (

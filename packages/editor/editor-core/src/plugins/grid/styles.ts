@@ -2,11 +2,13 @@
 import { css, Styles, StyledComponentClass } from 'styled-components';
 import { colors } from '@atlaskit/theme';
 
+const GRID_GUTTER = 24;
+
 export const gridStyles = css`
   .gridParent {
-    width: calc(100% + 24px);
-    margin-left: -12px;
-    margin-right: -12px;
+    width: calc(100% + ${GRID_GUTTER}px);
+    margin-left: -${GRID_GUTTER / 2}px;
+    margin-right: -${GRID_GUTTER / 2}px;
     transform: scale(1);
   }
 

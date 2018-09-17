@@ -1,7 +1,8 @@
 import { MediaSingleLayout } from '../../schema';
+import { EditorAppearance } from '../../../../editor-core/src/types';
 
 const gutterSize = 24;
-const gridWidth = 680 + gutterSize;
+const FULLPAGE_GRID_WIDTH = 680 + gutterSize;
 
 export const validResizeModes: MediaSingleLayout[] = [
   'center',
@@ -18,23 +19,30 @@ export function calcPxFromColumns(
   columns: number,
   containerWidth: number,
   gridSize: number,
+  appearance: EditorAppearance,
 ): number {
-  return Math.floor(
-    (containerWidth > gridWidth ? gridWidth : containerWidth) /
-      gridSize *
-      columns -
-      gutterSize,
-  );
+  const gridWidth =
+    appearance === 'full-page' ? FULLPAGE_GRID_WIDTH : containerWidth - 40;
+  const maxWidth =
+    appearance === 'full-page'
+      ? Math.min(containerWidth, gridWidth)
+      : gridWidth;
+
+  return Math.floor(maxWidth / gridSize * columns - gutterSize);
 }
 
 export function calcColumnsFromPx(
   width: number,
   containerWidth: number,
   gridSize: number,
+  appearance: EditorAppearance,
 ): number {
-  return Math.ceil(
-    (width + gutterSize) *
-      gridSize /
-      (containerWidth > gridWidth ? gridWidth : containerWidth),
-  );
+  const gridWidth =
+    appearance === 'full-page' ? FULLPAGE_GRID_WIDTH : containerWidth - 40;
+  const maxWidth =
+    appearance === 'full-page'
+      ? Math.min(containerWidth, gridWidth)
+      : gridWidth;
+
+  return Math.ceil((width + gutterSize) * gridSize / maxWidth);
 }

@@ -79,6 +79,7 @@ const mediaPlugin = (options?: MediaOptions): EditorPlugin => ({
           errorReporter,
           portalProviderAPI,
           reactContext,
+          appearance,
         }) =>
           createPlugin(
             schema,
@@ -97,7 +98,7 @@ const mediaPlugin = (options?: MediaOptions): EditorPlugin => ({
                   portalProviderAPI,
                   providerFactory,
                   {
-                    mediaSingle: ({ view, node, ...props }) => (
+                    mediaSingle: ({ view, node, ...mediaSingleProps }) => (
                       <WithPluginState
                         editorView={view}
                         eventDispatcher={eventDispatcher}
@@ -112,7 +113,8 @@ const mediaPlugin = (options?: MediaOptions): EditorPlugin => ({
                             isResizable={
                               options && options.UNSAFE_allowMediaSingleResizing
                             }
-                            {...props}
+                            appearance={props.appearance}
+                            {...mediaSingleProps}
                           />
                         )}
                       />

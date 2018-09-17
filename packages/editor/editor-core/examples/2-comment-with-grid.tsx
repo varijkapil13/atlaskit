@@ -103,6 +103,7 @@ export default class EditorWithFeedback extends React.Component<Props, State> {
                     media={{
                       provider: mediaProvider,
                       allowMediaSingle: true,
+                      UNSAFE_allowMediaSingleResizing: true,
                     }}
                     allowLayouts={true}
                     taskDecisionProvider={taskDecisionProvider}

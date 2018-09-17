@@ -17,10 +17,6 @@ export const DEFAULT_GRID_SIZE = 12;
 // TODO: values will change once we figure out what break points
 // we want to change the grid size (if any)
 const calcGridSize = (width: number): number => {
-  // if (width < 560) {
-  //   return 6;
-  // }
-
   return DEFAULT_GRID_SIZE;
 };
 
@@ -37,9 +33,10 @@ export const createPlugin = ({ dispatch }) =>
     state: {
       init: (_, state): GridPluginState => {
         const editorWidth = widthPlugin.getState(state);
+        console.log('grid is using editor width', editorWidth);
         return {
           gridSize: editorWidth ? calcGridSize(editorWidth) : DEFAULT_GRID_SIZE,
-          visible: false,
+          visible: true,
         };
       },
       apply: (tr, pluginState: GridPluginState, oldState, newState) => {
@@ -93,14 +90,14 @@ const gridPlugin: EditorPlugin = {
           }
 
           const gridLines: JSX.Element[] = [];
-          const gridPace = 100 / grid.gridSize;
+          const gridSpacing = 100 / grid.gridSize;
 
           for (let i = 0; i < grid.gridSize; i++) {
             gridLines.push(
               <div
                 key={i}
                 className="gridLine"
-                style={{ paddingLeft: `${gridPace}%` }}
+                style={{ paddingLeft: `${gridSpacing}%` }}
               />,
             );
           }
