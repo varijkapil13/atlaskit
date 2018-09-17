@@ -8,5 +8,12 @@ export * from './mixins';
 export { BlockCard, InlineCard };
 
 export * from './camera';
-export * from './imageMetaData';
+export {
+  getImageInfo,
+  getOrientation,
+  readImageMetaData,
+  ImageInfo,
+  ImageMetaData,
+  ImageMetaDataTags,
+} from './imageMetaData';
 export * from './util';
