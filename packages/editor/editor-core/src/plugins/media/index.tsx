@@ -109,7 +109,7 @@ const mediaPlugin = (options?: MediaOptions): EditorPlugin => ({
                           <ReactMediaSingleNode
                             view={view}
                             node={node}
-                            width={width}
+                            containerWidth={width}
                             isResizable={
                               options && options.UNSAFE_allowMediaSingleResizing
                             }

@@ -1,7 +1,8 @@
 import { MediaSingleLayout } from '../../schema';
 import { EditorAppearance } from '../../../../editor-core/src/types';
 
-const gutterSize = 24;
+const handleMargin = 12;
+const gutterSize = handleMargin * 2;
 const FULLPAGE_GRID_WIDTH = 680 + gutterSize;
 
 export const validResizeModes: MediaSingleLayout[] = [
@@ -15,6 +16,11 @@ export const validWidthModes: MediaSingleLayout[] = [
   'wrap-right',
 ];
 
+// comment editor:
+// 16px margin on all 4 sides (on .ak-editor-content-area)
+// 20px on left-right  (on .ProseMirror)
+// we only care about the .ProseMirror margins
+
 export function calcPxFromColumns(
   columns: number,
   containerWidth: number,
@@ -22,13 +28,15 @@ export function calcPxFromColumns(
   appearance: EditorAppearance,
 ): number {
   const gridWidth =
-    appearance === 'full-page' ? FULLPAGE_GRID_WIDTH : containerWidth - 40;
+    appearance === 'full-page' ? FULLPAGE_GRID_WIDTH : containerWidth - 16;
   const maxWidth =
     appearance === 'full-page'
       ? Math.min(containerWidth, gridWidth)
       : gridWidth;
 
-  return Math.floor(maxWidth / gridSize * columns - gutterSize);
+  console.log('using max width', maxWidth);
+
+  return maxWidth / gridSize * columns - gutterSize;
 }
 
 export function calcColumnsFromPx(
@@ -38,11 +46,52 @@ export function calcColumnsFromPx(
   appearance: EditorAppearance,
 ): number {
   const gridWidth =
-    appearance === 'full-page' ? FULLPAGE_GRID_WIDTH : containerWidth - 40;
+    appearance === 'full-page'
+      ? FULLPAGE_GRID_WIDTH
+      : containerWidth - 16 /* (20 - 12) * 2 */;
   const maxWidth =
     appearance === 'full-page'
       ? Math.min(containerWidth, gridWidth)
       : gridWidth;
 
-  return Math.ceil((width + gutterSize) * gridSize / maxWidth);
+  return (width + gutterSize) * gridSize / maxWidth;
+}
+
+export function calcPxFromPct(
+  pct: number,
+  containerWidth: number,
+  gridSize: number,
+  appearance: EditorAppearance,
+): number {
+  const gridWidth =
+    appearance === 'full-page'
+      ? FULLPAGE_GRID_WIDTH
+      : containerWidth - 16 /* (20 - 12) * 2 */;
+  const maxWidth =
+    appearance === 'full-page'
+      ? Math.min(containerWidth, gridWidth)
+      : gridWidth;
+
+  return maxWidth * pct - gutterSize;
+}
+
+export function calcPctFromPx(
+  width: number,
+  containerWidth: number,
+  gridSize: number,
+  appearance: EditorAppearance,
+): number {
+  const gridWidth =
+    appearance === 'full-page'
+      ? FULLPAGE_GRID_WIDTH
+      : containerWidth - 16 /* (20 - 12) * 2 */;
+  const maxWidth =
+    appearance === 'full-page'
+      ? Math.min(containerWidth, gridWidth)
+      : gridWidth;
+
+  const res = (width + gutterSize) / maxWidth;
+  console.log('using', width, 'got', res);
+
+  return res;
 }

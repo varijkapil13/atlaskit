@@ -2,13 +2,17 @@ import * as React from 'react';
 import { Component, ReactElement } from 'react';
 import { Node as PMNode } from 'prosemirror-model';
 import { EditorView } from 'prosemirror-view';
-import { MediaSingle } from '@atlaskit/editor-common';
+import { MediaSingle, calcPxFromColumns } from '@atlaskit/editor-common';
 import { MediaNodeProps } from './media';
 import { stateKey, MediaPluginState } from '../pm-plugins/main';
 import ResizableMediaSingle from '../ui/ResizableMediaSingle';
 import { displayGrid } from '../../../plugins/grid';
 import { MediaSingleLayout } from '@atlaskit/editor-common';
 import { EditorAppearance } from '../../../types';
+import {
+  calcColumnsFromPx,
+  calcPxFromPct,
+} from '../../../../../editor-common/src/ui/MediaSingle/grid';
 
 const DEFAULT_WIDTH = 250;
 const DEFAULT_HEIGHT = 200;
@@ -16,7 +20,7 @@ const DEFAULT_HEIGHT = 200;
 export interface MediaSingleNodeProps {
   node: PMNode;
   view: EditorView;
-  width: number;
+  containerWidth: number;
   isResizable?: boolean;
   getPos: () => number | undefined;
   appearance: EditorAppearance;
@@ -66,7 +70,7 @@ export default class MediaSingleNode extends Component<
     this.mediaPluginState.updateLayout(layout);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps: MediaSingleNodeProps, nextState) {
     const nextChild: ReactElement<MediaNodeProps> = this.getChild(nextProps);
 
     const { width } = this.child.props.node.attrs;
@@ -79,9 +83,9 @@ export default class MediaSingleNode extends Component<
       layout === 'full-width' ||
       this.state.progress !== nextState.progress ||
       node !== nextProps.node ||
-      nextProps.width !== this.props.width ||
-      this.props.node.attrs.columnSpan !== nextProps.node.attrs.columnSpan ||
-      width !== nextWidth
+      this.props.node.attrs.width !== nextProps.node.attrs.width ||
+      width !== nextWidth ||
+      this.props.containerWidth !== nextProps.containerWidth
     );
   }
 
@@ -110,18 +114,20 @@ export default class MediaSingleNode extends Component<
     return mediaState && mediaState.status === 'ready' && mediaState!.preview;
   }
 
-  updateSize = (columnSpan: number | null, layout: MediaSingleLayout) => {
+  updateSize = (width: number | null, layout: MediaSingleLayout) => {
     const { state, dispatch } = this.props.view;
     const pos = this.props.getPos();
     if (typeof pos === 'undefined') {
       return;
     }
 
+    console.warn('applying size', width);
+
     return dispatch(
       state.tr.setNodeMarkup(pos, undefined, {
         ...this.props.node.attrs,
         layout,
-        columnSpan,
+        width,
       }),
     );
   };
@@ -130,7 +136,7 @@ export default class MediaSingleNode extends Component<
     displayGrid(show)(this.props.view.state, this.props.view.dispatch);
 
   render() {
-    const { layout, columnSpan: columns } = this.props.node.attrs;
+    const { layout, width: mediaSingleWidth } = this.props.node.attrs;
     const { progress } = this.state;
     let hideProgress = false;
 
@@ -151,6 +157,39 @@ export default class MediaSingleNode extends Component<
     const mediaState = this.mediaPluginState.getMediaNodeState(
       this.child.props.node.attrs.__key,
     );
+
+    const gridSize = 12;
+    if (mediaSingleWidth) {
+      // align to next grid
+      // FIXME: move to state
+      // const columnSpan = calcColumnsFromPx(mediaSingleWidth, this.props.containerWidth, gridSize, this.props.appearance);
+      console.log('media single had width', mediaSingleWidth);
+      const pxWidth = calcPxFromPct(
+        mediaSingleWidth,
+        this.props.containerWidth,
+        gridSize,
+        this.props.appearance,
+      );
+      const columnSpan = Math.round(
+        calcColumnsFromPx(
+          pxWidth,
+          this.props.containerWidth,
+          gridSize,
+          this.props.appearance,
+        ),
+      );
+      console.log('consumes', columnSpan, 'columns');
+      const alignedWidth = calcPxFromColumns(
+        columnSpan,
+        this.props.containerWidth,
+        gridSize,
+        this.props.appearance,
+      );
+
+      height = height * (alignedWidth / width);
+      width = alignedWidth;
+      console.log('calculated new width', alignedWidth);
+    }
 
     const children = React.cloneElement(
       this.child as ReactElement<any>,
@@ -181,12 +220,11 @@ export default class MediaSingleNode extends Component<
       layout,
       width,
       height,
-      columns,
 
-      containerWidth: this.props.width,
-      gridSize: 12,
+      containerWidth: this.props.containerWidth,
       isLoading: !width,
       appearance: this.props.appearance,
+      forceWidth: mediaSingleWidth,
     };
 
     return this.props.isResizable ? (
@@ -196,6 +234,7 @@ export default class MediaSingleNode extends Component<
         state={this.props.view.state}
         updateSize={this.updateSize}
         displayGrid={this.displayGrid}
+        gridSize={gridSize}
       >
         {children}
       </ResizableMediaSingle>

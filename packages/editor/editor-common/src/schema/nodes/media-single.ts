@@ -22,15 +22,14 @@ export interface MediaSingleDefinition {
 }
 export interface MediaSingleAttributes {
   /**
-   * @minimum 1
    * @stage 0
    */
-  columnSpan?: number;
+  width?: number;
   layout: Layout;
 }
 
 export const defaultAttrs = {
-  columnSpan: { default: null },
+  width: { default: null },
   layout: { default: 'center' },
 };
 
@@ -44,16 +43,16 @@ export const mediaSingle: NodeSpec = {
       tag: 'div[data-node-type="mediaSingle"]',
       getAttrs: (dom: HTMLElement) => ({
         layout: dom.getAttribute('data-layout') || 'center',
-        columnSpan: Number(dom.getAttribute('data-column-span')) || null,
+        width: Number(dom.getAttribute('data-width')) || null,
       }),
     },
   ],
   toDOM(node: Node) {
-    const { layout, columnSpan } = node.attrs;
+    const { layout, width } = node.attrs;
     const attrs = {
       'data-node-type': 'mediaSingle',
       'data-layout': layout,
-      'data-column-span': columnSpan,
+      'data-width': width,
     };
     return ['div', attrs, 0];
   },

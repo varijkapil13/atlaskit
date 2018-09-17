@@ -18,7 +18,7 @@ export const exampleDocument = {
       type: 'mediaSingle',
       attrs: {
         layout: 'wrap-left',
-        columnSpan: 4,
+        width: 0.33,
       },
       content: [
         {
@@ -78,7 +78,7 @@ export const exampleDocument = {
               type: 'mediaSingle',
               attrs: {
                 layout: 'center',
-                columnSpan: 4,
+                width: 0.33,
               },
               content: [
                 {
@@ -111,7 +111,7 @@ export const exampleDocument = {
               type: 'mediaSingle',
               attrs: {
                 layout: 'center',
-                columnSpan: 6,
+                width: 0.49,
               },
               content: [
                 {
@@ -147,7 +147,7 @@ export const exampleDocument = {
       type: 'mediaSingle',
       attrs: {
         layout: 'wrap-right',
-        columnSpan: 8,
+        width: 0.66,
       },
       content: [
         {
@@ -191,7 +191,7 @@ export const exampleDocument = {
       type: 'mediaSingle',
       attrs: {
         layout: 'center',
-        columnSpan: 12,
+        width: 1,
       },
       content: [
         {
@@ -225,7 +225,7 @@ export const exampleDocument = {
       type: 'mediaSingle',
       attrs: {
         layout: 'center',
-        columnSpan: 6,
+        width: 0.5,
       },
       content: [
         {
@@ -259,7 +259,7 @@ export const exampleDocument = {
       type: 'mediaSingle',
       attrs: {
         layout: 'center',
-        columnSpan: 4,
+        width: 0.33,
       },
       content: [
         {
@@ -293,7 +293,7 @@ export const exampleDocument = {
       type: 'mediaSingle',
       attrs: {
         layout: 'center',
-        columnSpan: 2,
+        width: 0.165,
       },
       content: [
         {
@@ -357,7 +357,7 @@ export const exampleDocument = {
               type: 'mediaSingle',
               attrs: {
                 layout: 'center',
-                columnSpan: 4,
+                width: 0.33,
               },
               content: [
                 {
@@ -390,7 +390,7 @@ export const exampleDocument = {
               type: 'mediaSingle',
               attrs: {
                 layout: 'center',
-                columnSpan: 6,
+                width: 0.5,
               },
               content: [
                 {
@@ -444,7 +444,7 @@ export const exampleDocument = {
               type: 'mediaSingle',
               attrs: {
                 layout: 'center',
-                columnSpan: 2,
+                width: 0.166,
               },
               content: [
                 {
@@ -477,7 +477,7 @@ export const exampleDocument = {
               type: 'mediaSingle',
               attrs: {
                 layout: 'center',
-                columnSpan: 4,
+                width: 0.32,
               },
               content: [
                 {
@@ -510,7 +510,7 @@ export const exampleDocument = {
               type: 'mediaSingle',
               attrs: {
                 layout: 'center',
-                columnSpan: 2,
+                width: 0.166,
               },
               content: [
                 {

@@ -25,12 +25,11 @@ export function calcMediaSingleWidth(
   layout: MediaSingleLayout,
   width: number,
   containerWidth?: number,
-  columnSpan?: number,
 ): string {
   switch (layout) {
     case 'wrap-right':
     case 'wrap-left':
-      return width > akEditorFullPageMaxWidth / 2 && !columnSpan
+      return width > akEditorFullPageMaxWidth / 2
         ? 'calc(50% - 12px)'
         : `${width}px`;
     case 'wide':
@@ -39,7 +38,7 @@ export function calcMediaSingleWidth(
       return `${Math.min(width, containerWidth || 0) -
         akEditorBreakoutPadding}px`;
     default:
-      return width > akEditorFullPageMaxWidth && !columnSpan
+      return width > akEditorFullPageMaxWidth
         ? `${akEditorFullPageMaxWidth}px`
         : `${width}px`;
   }
@@ -77,7 +76,6 @@ export interface WrapperProps {
   width: number;
   height: number;
   containerWidth?: number;
-  columnSpan?: number;
 }
 
 /**
@@ -89,9 +87,8 @@ export const MediaSingleDimensionHelper = ({
   height,
   layout,
   containerWidth = 0,
-  columnSpan,
 }: WrapperProps) => css`
-  width: ${calcMediaSingleWidth(layout, width, containerWidth, columnSpan)};
+  width: ${calcMediaSingleWidth(layout, width, containerWidth)};
   max-width: ${calcMaxWidth(layout, width, containerWidth)};
   float: ${float(layout)};
   margin: ${calcMargin(layout)};

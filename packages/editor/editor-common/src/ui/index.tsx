@@ -15,7 +15,6 @@ export {
   validResizeModes as MediaSingleResizeModes,
   validWidthModes as MediaSingleWidthModes,
   calcPxFromColumns,
-  calcColumnsFromPx,
 } from './MediaSingle/grid';
 
 export { default as Mention } from './Mention';

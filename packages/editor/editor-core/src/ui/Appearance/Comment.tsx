@@ -94,8 +94,9 @@ const ContentArea = styled(ContentStyles)`
   }
 
   .gridParent {
-    margin: 0 10px 10px 10px;
-    width: 100%;
+    margin-left: ${20 - 12}px;
+    margin-right: ${20 - 12}px;
+    width: calc(100% + 8px);
   }
 
   padding: ${TableControlsPadding}px;
