@@ -101,6 +101,12 @@ export const fixCursorAlignment = (view: EditorView) => {
   let breakoutWidth = 0;
   let paddingLeft = 0;
 
+  // If the node is a text node, set the target to its parent
+  // otherwise window.getComputedStyle(...) will fail
+  if (targetNodeRef.nodeType === Node.TEXT_NODE) {
+    targetNodeRef = targetNodeRef.parentElement!;
+  }
+
   // gets width and height of the prevNode DOM element, or its nodeView wrapper DOM element
   do {
     const css = window.getComputedStyle(
