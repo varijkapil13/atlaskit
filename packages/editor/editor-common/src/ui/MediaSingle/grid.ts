@@ -107,18 +107,23 @@ export const snapToGrid = (
     gridSize,
     appearance,
   );
-  const columnSpan = Math.round(
-    calcColumnsFromPx(pxWidth, containerWidth, gridSize, appearance),
-  );
-  const alignedWidth = calcPxFromColumns(
-    columnSpan,
-    containerWidth,
-    gridSize,
-    appearance,
-  );
+  // const columnSpan = Math.round(
+  //   calcColumnsFromPx(pxWidth, containerWidth, gridSize, appearance),
+  // );
+  // const alignedWidth = calcPxFromColumns(
+  //   columnSpan,
+  //   containerWidth,
+  //   gridSize,
+  //   appearance,
+  // );
+
+  // return {
+  //   height: height / width * alignedWidth,
+  //   width: alignedWidth,
+  // };
 
   return {
-    height: height / width * alignedWidth,
-    width: alignedWidth,
+    height: height / width * pxWidth,
+    width: pxWidth,
   };
 };
