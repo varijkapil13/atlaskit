@@ -152,6 +152,12 @@ export default class MediaSingleNode extends Component<
       this.child.props.node.attrs.__key,
     );
 
+    if (width === null && this.mediaReady(mediaState)) {
+      width = DEFAULT_WIDTH;
+      height = DEFAULT_HEIGHT;
+      hideProgress = true;
+    }
+
     const children = React.cloneElement(
       this.child as ReactElement<any>,
       {
@@ -162,20 +168,9 @@ export default class MediaSingleNode extends Component<
         isMediaSingle: true,
         progress,
         onExternalImageLoaded: this.onExternalImageLoaded,
+        hideProgress,
       } as MediaNodeProps,
     );
-
-    if (width === null && this.mediaReady(mediaState)) {
-      width = DEFAULT_WIDTH;
-      height = DEFAULT_HEIGHT;
-      hideProgress = true;
-    }
-    
-    const MediaSingleComponent = this.props.isResizable
-      ? ResizableMediaSingle
-      : MediaSingle;
-
-    const { layoutColumn } = this.props.view.state.schema.nodes;
 
     const props = {
       layout,
