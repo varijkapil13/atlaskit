@@ -1530,7 +1530,7 @@ describe('Media plugin', () => {
 
           expect(editorView.state.doc).toEqualDocument(
             doc(
-              mediaSingle({ layout: 'wrap-left' })(
+              mediaSingle({ layout: 'wrap-left', width: 0.5 })(
                 media({
                   id: 'media',
                   type: 'file',
