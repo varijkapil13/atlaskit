@@ -59,3 +59,12 @@ export const mediaSingle: NodeSpec = {
     return ['div', attrs, 0];
   },
 };
+
+export const toJSON = (node: Node) => ({
+  attrs: Object.keys(node.attrs).reduce((obj, key) => {
+    if (node.attrs[key] !== null) {
+      obj[key] = node.attrs[key];
+    }
+    return obj;
+  }, {}),
+});
