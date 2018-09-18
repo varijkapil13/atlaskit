@@ -77,6 +77,7 @@ export interface WrapperProps {
   height: number;
   containerWidth?: number;
   forceWidth: boolean;
+  innerRef?: (elem: HTMLElement) => void;
 }
 
 /**

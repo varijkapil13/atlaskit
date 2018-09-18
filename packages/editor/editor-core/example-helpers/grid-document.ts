@@ -3,6 +3,92 @@ export const exampleDocument = {
   type: 'doc',
   content: [
     {
+      type: 'bulletList',
+      content: [
+        {
+          type: 'listItem',
+          content: [
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'this is a list',
+                },
+              ],
+            },
+            {
+              type: 'bulletList',
+              content: [
+                {
+                  type: 'listItem',
+                  content: [
+                    {
+                      type: 'paragraph',
+                      content: [
+                        {
+                          type: 'text',
+                          text: 'and I am indented',
+                        },
+                      ],
+                    },
+                    {
+                      type: 'bulletList',
+                      content: [
+                        {
+                          type: 'listItem',
+                          content: [
+                            {
+                              type: 'paragraph',
+                              content: [
+                                {
+                                  type: 'text',
+                                  text: 'here’s an image',
+                                },
+                              ],
+                            },
+                            {
+                              type: 'bulletList',
+                              content: [
+                                {
+                                  type: 'listItem',
+                                  content: [
+                                    {
+                                      type: 'mediaSingle',
+                                      attrs: {
+                                        width: 0.33,
+                                      },
+                                      content: [
+                                        {
+                                          type: 'media',
+                                          attrs: {
+                                            id:
+                                              'b5425161-d01f-412e-87c8-467e884a8280',
+                                            type: 'file',
+                                            collection: 'MediaServicesSample',
+                                            width: 2750,
+                                            height: 2061,
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
       type: 'heading',
       attrs: {
         level: 2,

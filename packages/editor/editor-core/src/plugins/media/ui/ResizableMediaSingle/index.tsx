@@ -236,12 +236,35 @@ export default class ResizableMediaSingle extends React.Component<
       : this.gridSpan / 2;
   }
 
+  wrapper: HTMLElement | null;
   get snapPoints() {
+    let offsetLeft = 0;
+    if (this.wrapper && this.insideInlineLike) {
+      let currentNode: HTMLElement | null = this.wrapper;
+      while (
+        currentNode &&
+        currentNode.parentElement &&
+        !currentNode.parentElement.classList.contains('ProseMirror') &&
+        currentNode !== document.body
+      ) {
+        offsetLeft += currentNode.offsetLeft;
+        currentNode = currentNode.parentElement;
+      }
+
+      offsetLeft -= (document.querySelector('.ProseMirror')! as HTMLElement)
+        .offsetLeft;
+      if (this.insideTable) {
+        // table cell padding
+        offsetLeft -= 10;
+      }
+    }
+
     const { appearance, containerWidth } = this.props;
     const snapPoints: number[] = [];
     for (let i = 0; i <= this.gridWidth; i++) {
       snapPoints.push(
-        calcPxFromColumns(i, containerWidth, this.gridBase, appearance),
+        calcPxFromColumns(i, containerWidth, this.gridBase, appearance) -
+          offsetLeft,
       );
     }
 
@@ -267,6 +290,16 @@ export default class ResizableMediaSingle extends React.Component<
 
     const { table, listItem } = this.props.state.schema.nodes;
     return !!findParentNodeOfTypeClosestToPos($pos, [table, listItem]);
+  }
+
+  get insideTable(): boolean {
+    const $pos = this.$pos;
+    if (!$pos) {
+      return false;
+    }
+
+    const { table } = this.props.state.schema.nodes;
+    return !!findParentNodeOfTypeClosestToPos($pos, [table]);
   }
 
   render() {
@@ -305,6 +338,7 @@ export default class ResizableMediaSingle extends React.Component<
         layout={this.props.layout}
         containerWidth={this.props.containerWidth || this.props.width}
         forceWidth={!!this.props.gridWidth}
+        innerRef={elem => (this.wrapper = elem)}
       >
         <Resizer
           {...this.props}
