@@ -194,14 +194,22 @@ export default class ResizableMediaSingle extends React.Component<
       : gridSize / 2;
   }
 
-  get gridSpan() {
-    const { gridSize } = this.props;
+  get $pos() {
     const pos = this.props.getPos();
     if (typeof pos === 'undefined') {
+      return null;
+    }
+
+    return this.props.state.doc.resolve(pos);
+  }
+
+  get gridSpan() {
+    const { gridSize } = this.props;
+    const $pos = this.$pos;
+    if (!$pos) {
       return gridSize;
     }
 
-    const $pos = this.props.state.doc.resolve(pos);
     const parentLayout = findParentNodeOfTypeClosestToPos(
       $pos,
       this.props.state.schema.nodes.layoutSection,
@@ -237,12 +245,11 @@ export default class ResizableMediaSingle extends React.Component<
       );
     }
 
-    const pos = this.props.getPos();
-    if (typeof pos === 'undefined') {
+    const $pos = this.$pos;
+    if (!$pos) {
       return snapPoints;
     }
 
-    const $pos = this.props.state.doc.resolve(pos);
     const isTopLevel = $pos.parent.type.name === 'doc';
     if (isTopLevel && appearance === 'full-page') {
       snapPoints.push(akEditorWideLayoutWidth);
@@ -250,6 +257,16 @@ export default class ResizableMediaSingle extends React.Component<
     }
 
     return snapPoints;
+  }
+
+  get insideInlineLike(): boolean {
+    const $pos = this.$pos;
+    if (!$pos) {
+      return false;
+    }
+
+    const { table, listItem } = this.props.state.schema.nodes;
+    return !!findParentNodeOfTypeClosestToPos($pos, [table, listItem]);
   }
 
   render() {
@@ -275,6 +292,10 @@ export default class ResizableMediaSingle extends React.Component<
         MediaSingleResizeModes.concat(
           `wrap-${oppositeSide}` as MediaSingleLayout,
         ).indexOf(this.props.layout) > -1;
+
+      if (side === 'left' && this.insideInlineLike) {
+        enable[side] = false;
+      }
     });
 
     return (
