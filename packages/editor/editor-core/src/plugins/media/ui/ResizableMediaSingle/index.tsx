@@ -6,6 +6,7 @@ import {
   calcPxFromColumns,
   calcPctFromPx,
   snapToGrid,
+  calcMediaSingleWidth,
 } from '@atlaskit/editor-common';
 import {
   default as Resizable,
@@ -42,7 +43,7 @@ class Resizer extends React.Component<
       newWidth: number,
     ) => { layout: MediaSingleLayout; width: number | null };
     snapPoints: number[];
-    width: number;
+    width: string;
   },
   { isResizing: boolean }
 > {
@@ -118,7 +119,7 @@ class Resizer extends React.Component<
         ref={this.setResizableRef}
         onResize={this.handleResize}
         size={{
-          width: `${this.props.width}px`,
+          width: this.props.width,
         }}
         className={classnames(
           'media-single',
@@ -245,7 +246,7 @@ export default class ResizableMediaSingle extends React.Component<
     const isTopLevel = $pos.parent.type.name === 'doc';
     if (isTopLevel && appearance === 'full-page') {
       snapPoints.push(akEditorWideLayoutWidth);
-      snapPoints.push(akEditorWideLayoutWidth + 120);
+      snapPoints.push(containerWidth - 128);
     }
 
     return snapPoints;
@@ -290,7 +291,11 @@ export default class ResizableMediaSingle extends React.Component<
           enable={enable}
           calcNewSize={this.calcNewSize}
           snapPoints={this.snapPoints}
-          width={width}
+          width={calcMediaSingleWidth(
+            this.props.layout,
+            width,
+            this.props.containerWidth,
+          )}
         >
           {React.cloneElement(React.Children.only(this.props.children), {
             onSelection: selected => {

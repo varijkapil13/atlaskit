@@ -21,7 +21,7 @@ function float(layout: MediaSingleLayout): string {
   }
 }
 
-function calcWidth(
+export function calcWidth(
   layout: MediaSingleLayout,
   width: number,
   containerWidth?: number,
