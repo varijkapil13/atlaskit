@@ -189,7 +189,9 @@ export default class ResizableMediaSingle extends React.Component<
 
   get gridBase() {
     const { layout, gridSize } = this.props;
-    return layout === 'wrap-left' || layout === 'wrap-right'
+    return layout === 'wrap-left' ||
+      layout === 'wrap-right' ||
+      this.insideInlineLike
       ? gridSize
       : gridSize / 2;
   }
@@ -231,7 +233,9 @@ export default class ResizableMediaSingle extends React.Component<
    */
   get gridWidth() {
     const { layout } = this.props;
-    return layout === 'wrap-left' || layout === 'wrap-right'
+    return layout === 'wrap-left' ||
+      layout === 'wrap-right' ||
+      this.insideInlineLike
       ? this.gridSpan
       : this.gridSpan / 2;
   }
