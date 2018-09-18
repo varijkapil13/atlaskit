@@ -43,7 +43,7 @@ class Resizer extends React.Component<
       newWidth: number,
     ) => { layout: MediaSingleLayout; width: number | null };
     snapPoints: number[];
-    width: string;
+    mediaSingleWidth: string;
   },
   { isResizing: boolean }
 > {
@@ -119,7 +119,7 @@ class Resizer extends React.Component<
         ref={this.setResizableRef}
         onResize={this.handleResize}
         size={{
-          width: this.props.width,
+          width: this.props.mediaSingleWidth,
         }}
         className={classnames(
           'media-single',
@@ -291,7 +291,7 @@ export default class ResizableMediaSingle extends React.Component<
           enable={enable}
           calcNewSize={this.calcNewSize}
           snapPoints={this.snapPoints}
-          width={calcMediaSingleWidth(
+          mediaSingleWidth={calcMediaSingleWidth(
             this.props.layout,
             width,
             this.props.containerWidth,
